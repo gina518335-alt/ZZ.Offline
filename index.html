@@ -1,0 +1,766 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Courier; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="ko"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8"/&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;성수동 매물 지도&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/&gt;</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">* { box-sizing: border-box; margin: 0; padding: 0; }</span></p>
+<p class="p1"><span class="s1">body {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', sans-serif;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #f0ede8; color: #1a1a1a; height: 100vh; display: flex; overflow: hidden;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">#sidebar {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>width: 300px; min-width: 300px; height: 100vh;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #fff; border-right: 1px solid #e8e5e0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>display: flex; flex-direction: column; overflow: hidden;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">#sidebar-header { padding: 16px 16px 12px; border-bottom: 1px solid #f0ede8; }</span></p>
+<p class="p1"><span class="s1">#sidebar-header h1 { font-size: 14px; font-weight: 600; color: #111; letter-spacing: -0.3px; }</span></p>
+<p class="p1"><span class="s1">#sidebar-header p { font-size: 11px; color: #bbb; margin-top: 2px; }</span></p>
+<p class="p1"><span class="s1">#mode-tabs { display: flex; border-bottom: 1px solid #f0ede8; }</span></p>
+<p class="p1"><span class="s1">.mode-tab {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>flex: 1; padding: 10px 4px; font-size: 12px; color: #bbb; text-align: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>font-family: inherit; background: none; border-top: none; border-left: none; border-right: none;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.mode-tab.active { color: #111; border-bottom-color: #111; font-weight: 500; }</span></p>
+<p class="p1"><span class="s1">.mode-tab:hover:not(.active) { color: #888; }</span></p>
+<p class="p1"><span class="s1">.tab-panel { display: none; flex-direction: column; flex: 1; overflow: hidden; }</span></p>
+<p class="p1"><span class="s1">.tab-panel.active { display: flex; }</span></p>
+<p class="p1"><span class="s1">#panel-pin { flex: 1; display: flex; flex-direction: column; overflow: hidden; }</span></p>
+<p class="p1"><span class="s1">#search-wrap { padding: 10px 12px 8px; border-bottom: 1px solid #f0ede8; }</span></p>
+<p class="p1"><span class="s1">#search-row { display: flex; gap: 6px; }</span></p>
+<p class="p1"><span class="s1">#search-input {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>flex: 1; background: #f7f5f2; border: 1px solid #e8e5e0; border-radius: 7px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>padding: 7px 10px; color: #111; font-size: 12px; outline: none; font-family: inherit;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">#search-input:focus { border-color: #ccc; background: #fff; }</span></p>
+<p class="p1"><span class="s1">#search-input::placeholder { color: #bbb; }</span></p>
+<p class="p1"><span class="s1">#search-btn {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>padding: 7px 11px; background: #111; border: none; border-radius: 7px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>color: #fff; font-size: 12px; cursor: pointer; font-family: inherit;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">#search-btn:hover { background: #333; }</span></p>
+<p class="p1"><span class="s1">#search-btn:disabled { background: #ccc; cursor: not-allowed; }</span></p>
+<p class="p1"><span class="s1">#search-status { font-size: 11px; color: #bbb; margin-top: 4px; min-height: 14px; padding: 0 2px; }</span></p>
+<p class="p1"><span class="s1">#search-results { margin-top: 4px; }</span></p>
+<p class="p1"><span class="s1">.search-result-item {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>padding: 7px 10px; background: #f7f5f2; border: 1px solid #eeebe6;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border-radius: 6px; margin-bottom: 3px; font-size: 12px; cursor: pointer; line-height: 1.4;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.search-result-item:hover { background: #eeeae4; }</span></p>
+<p class="p1"><span class="s1">.res-name { font-weight: 500; color: #111; }</span></p>
+<p class="p1"><span class="s1">.res-addr { font-size: 10px; color: #aaa; margin-top: 1px; }</span></p>
+<p class="p1"><span class="s1">.color-legend { padding: 9px 14px; border-bottom: 1px solid #f0ede8; }</span></p>
+<p class="p1"><span class="s1">.legend-title { font-size: 10px; color: #ccc; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }</span></p>
+<p class="p1"><span class="s1">.color-swatches-row { display: flex; gap: 5px; flex-wrap: wrap; }</span></p>
+<p class="p1"><span class="s1">.swatch-legend { width: 14px; height: 14px; border-radius: 50%; cursor: default; }</span></p>
+<p class="p1"><span class="s1">.swatch-legend-label { font-size: 10px; color: #bbb; display: flex; align-items: center; gap: 4px; }</span></p>
+<p class="p1"><span class="s1">#prop-list-wrap { flex: 1; overflow-y: auto; padding: 6px 10px 10px; }</span></p>
+<p class="p1"><span class="s1">#prop-list-wrap::-webkit-scrollbar { width: 3px; }</span></p>
+<p class="p1"><span class="s1">#prop-list-wrap::-webkit-scrollbar-thumb { background: #e0dbd4; border-radius: 4px; }</span></p>
+<p class="p1"><span class="s1">.list-label { font-size: 10px; color: #ccc; text-transform: uppercase; letter-spacing: 1px; padding: 8px 8px 3px; }</span></p>
+<p class="p1"><span class="s1">.prop-card {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border: 1px solid #f0ede8; border-radius: 8px; padding: 9px 11px; margin-bottom: 4px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>cursor: pointer; transition: border-color 0.12s, background 0.12s; background: #fff;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.prop-card:hover { background: #faf8f5; border-color: #dedad4; }</span></p>
+<p class="p1"><span class="s1">.prop-card.active { border-color: #c8c4be; background: #faf8f5; }</span></p>
+<p class="p1"><span class="s1">.pc-top { display: flex; align-items: center; gap: 7px; }</span></p>
+<p class="p1"><span class="s1">.pc-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }</span></p>
+<p class="p1"><span class="s1">.pc-name { font-size: 12px; font-weight: 500; color: #111; flex: 1; }</span></p>
+<p class="p1"><span class="s1">.pc-area { font-size: 11px; color: #ccc; }</span></p>
+<p class="p1"><span class="s1">.pc-del { font-size: 14px; color: #bbb; cursor: pointer; padding-left: 6px; font-weight: 400; }</span></p>
+<p class="p1"><span class="s1">.pc-del:hover { color: #e24b4a; }</span></p>
+<p class="p1"><span class="s1">.pc-price { margin-top: 4px; font-size: 11px; color: #bbb; padding-left: 16px; }</span></p>
+<p class="p1"><span class="s1">.pc-price span { color: #888; font-weight: 500; }</span></p>
+<p class="p1"><span class="s1">.ref-card {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border: 1px dashed #e8e5e0; border-radius: 8px; padding: 8px 11px; margin-bottom: 4px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>cursor: pointer; transition: all 0.12s; background: #fafafa;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.ref-card:hover { background: #f5f3f0; border-color: #ccc; }</span></p>
+<p class="p1"><span class="s1">.ref-card.active { border-color: #bbb; }</span></p>
+<p class="p1"><span class="s1">.rc-top { display: flex; align-items: center; gap: 7px; }</span></p>
+<p class="p1"><span class="s1">.rc-ring { width: 9px; height: 9px; border-radius: 50%; border: 2px solid #aaa; flex-shrink: 0; background: transparent; }</span></p>
+<p class="p1"><span class="s1">.rc-name { font-size: 12px; color: #888; flex: 1; }</span></p>
+<p class="p1"><span class="s1">.rc-del { font-size: 14px; color: #bbb; cursor: pointer; padding-left: 6px; }</span></p>
+<p class="p1"><span class="s1">.rc-del:hover { color: #e24b4a; }</span></p>
+<p class="p1"><span class="s1">#pin-hint { padding: 8px 12px; border-top: 1px solid #f0ede8; font-size: 11px; color: #ccc; line-height: 1.7; }</span></p>
+<p class="p1"><span class="s1">#pin-hint b { color: #aaa; font-weight: 500; }</span></p>
+<p class="p1"><span class="s1">#panel-draw { padding: 12px; gap: 8px; overflow-y: auto; }</span></p>
+<p class="p1"><span class="s1">.draw-section-label { font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; margin-top: 2px; }</span></p>
+<p class="p1"><span class="s1">.tier-radio-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }</span></p>
+<p class="p1"><span class="s1">.tier-radio {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>display: flex; align-items: center; gap: 8px; padding: 7px 10px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border: 1.5px solid #f0ede8; border-radius: 7px; cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>transition: all 0.12s; background: #fff;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.tier-radio:hover { border-color: #dedad4; }</span></p>
+<p class="p1"><span class="s1">.tier-radio-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }</span></p>
+<p class="p1"><span class="s1">.tier-radio-label { font-size: 12px; color: #444; flex: 1; }</span></p>
+<p class="p1"><span class="s1">.draw-btns { display: flex; gap: 6px; margin-bottom: 10px; }</span></p>
+<p class="p1"><span class="s1">.draw-btn {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>flex: 1; padding: 10px 6px; border: 1.5px solid #e8e5e0; border-radius: 8px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #fff; font-size: 11px; color: #888; cursor: pointer; font-family: inherit;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>text-align: center; transition: all 0.12s; line-height: 1.5;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.draw-btn:hover { border-color: #ccc; background: #faf8f5; color: #333; }</span></p>
+<p class="p1"><span class="s1">.draw-btn.active { background: #111; color: #fff; border-color: #111; }</span></p>
+<p class="p1"><span class="s1">.draw-btn .btn-icon { font-size: 17px; display: block; margin-bottom: 2px; }</span></p>
+<p class="p1"><span class="s1">#draw-hint-box {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #f7f5f2; border: 1px solid #e8e5e0; border-radius: 8px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>padding: 9px 11px; font-size: 11px; color: #999; line-height: 1.7;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">#draw-hint-box b { color: #666; font-weight: 500; }</span></p>
+<p class="p1"><span class="s1">#places-list-wrap { margin-top: 10px; }</span></p>
+<p class="p1"><span class="s1">.place-item {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>display: flex; align-items: center; gap: 8px; padding: 7px 10px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border: 1px solid #f0ede8; border-radius: 7px; margin-bottom: 4px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #fff; font-size: 12px;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.place-line { width: 20px; height: 3px; border-radius: 2px; flex-shrink: 0; }</span></p>
+<p class="p1"><span class="s1">.place-area { width: 15px; height: 13px; border-radius: 3px; flex-shrink: 0; opacity: 0.55; }</span></p>
+<p class="p1"><span class="s1">.place-name { flex: 1; color: #333; }</span></p>
+<p class="p1"><span class="s1">.place-del { font-size: 13px; color: #bbb; cursor: pointer; padding-left: 4px; }</span></p>
+<p class="p1"><span class="s1">.place-del:hover { color: #e24b4a; }</span></p>
+<p class="p1"><span class="s1">#map { flex: 1; height: 100vh; }</span></p>
+<p class="p1"><span class="s1">.leaflet-container { cursor: default; }</span></p>
+<p class="p1"><span class="s1">.map-drawing { cursor: crosshair !important; }</span></p>
+<p class="p1"><span class="s1">.map-drawing .leaflet-container { cursor: crosshair !important; }</span></p>
+<p class="p1"><span class="s1">.leaflet-tooltip.place-label {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: rgba(255,255,255,0.92); border: 1px solid #ddd;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border-radius: 5px; padding: 3px 8px; font-size: 11px; font-weight: 600;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>color: #333; box-shadow: 0 1px 6px rgba(0,0,0,0.1); white-space: nowrap;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>pointer-events: none;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.leaflet-tooltip.place-label::before { display: none; }</span></p>
+<p class="p1"><span class="s1">#draw-tooltip {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>display: none; position: fixed; pointer-events: none; z-index: 8000;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #111; color: #fff; font-size: 11px; padding: 5px 10px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border-radius: 6px; transform: translate(12px, -50%);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.leaflet-popup-content-wrapper {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #fff !important; border: 1px solid #e8e5e0 !important;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border-radius: 10px !important; box-shadow: 0 4px 24px rgba(0,0,0,0.1) !important; padding: 0 !important;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.leaflet-popup-tip { background: #fff !important; }</span></p>
+<p class="p1"><span class="s1">.leaflet-popup-content { margin: 0 !important; }</span></p>
+<p class="p1"><span class="s1">.popup-inner { padding: 13px 15px; min-width: 190px; max-width: 250px; }</span></p>
+<p class="p1"><span class="s1">.popup-colorbar { width: 100%; height: 3px; border-radius: 2px; margin-bottom: 10px; }</span></p>
+<p class="p1"><span class="s1">.popup-name { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 9px; line-height: 1.35; }</span></p>
+<p class="p1"><span class="s1">.popup-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #f5f3f0; }</span></p>
+<p class="p1"><span class="s1">.popup-row:last-of-type { border: none; }</span></p>
+<p class="p1"><span class="s1">.popup-label { font-size: 11px; color: #bbb; }</span></p>
+<p class="p1"><span class="s1">.popup-val { font-size: 11px; color: #444; font-weight: 500; }</span></p>
+<p class="p1"><span class="s1">.popup-memo { margin-top: 8px; padding-top: 8px; border-top: 1px solid #f5f3f0; font-size: 11px; color: #999; line-height: 1.6; }</span></p>
+<p class="p1"><span class="s1">.popup-del { width: 100%; margin-top: 8px; padding: 5px; background: #f5f3f0; border: none; border-radius: 5px; font-size: 11px; color: #888; cursor: pointer; font-family: inherit; }</span></p>
+<p class="p1"><span class="s1">.popup-del:hover { background: #fdecea; color: #e24b4a; }</span></p>
+<p class="p1"><span class="s1">.ref-popup-inner { padding: 11px 14px; }</span></p>
+<p class="p1"><span class="s1">.ref-popup-name { font-size: 13px; font-weight: 500; color: #666; margin-bottom: 8px; }</span></p>
+<p class="p1"><span class="s1">.ref-popup-note { font-size: 11px; color: #aaa; margin-bottom: 8px; line-height: 1.5; }</span></p>
+<p class="p1"><span class="s1">#json-bar {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>display: flex; gap: 6px; padding: 10px 12px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border-top: 1px solid #f0ede8; background: #fff; flex-shrink: 0;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.json-btn {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>flex: 1; padding: 8px 6px; background: #f7f5f2; border: 1px solid #e8e5e0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border-radius: 7px; font-size: 11px; color: #666; cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>font-family: inherit; transition: all 0.12s; font-weight: 500;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.json-btn:hover { background: #eeeae4; border-color: #dedad4; color: #333; }</span></p>
+<p class="p1"><span class="s1">.modal-overlay {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>display: none; position: fixed; inset: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: rgba(0,0,0,0.2); z-index: 9999;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>align-items: center; justify-content: center;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.modal-overlay.open { display: flex; }</span></p>
+<p class="p1"><span class="s1">.modal-box {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #fff; border: 1px solid #e8e5e0; border-radius: 14px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>padding: 20px; width: 330px; max-height: 90vh; overflow-y: auto;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>box-shadow: 0 8px 40px rgba(0,0,0,0.12);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.modal-box h2 { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 14px; }</span></p>
+<p class="p1"><span class="s1">.mf { margin-bottom: 9px; }</span></p>
+<p class="p1"><span class="s1">.mf label { display: block; font-size: 11px; color: #aaa; margin-bottom: 4px; }</span></p>
+<p class="p1"><span class="s1">.mf input, .mf textarea {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>width: 100%; background: #f7f5f2; border: 1px solid #eeebe6; border-radius: 7px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>padding: 7px 10px; color: #111; font-size: 13px; outline: none; font-family: inherit; transition: border-color 0.15s;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.mf input:focus, .mf textarea:focus { border-color: #ccc; background: #fff; }</span></p>
+<p class="p1"><span class="s1">.mf textarea { resize: vertical; min-height: 55px; }</span></p>
+<p class="p1"><span class="s1">.modal-btns { display: flex; gap: 7px; margin-top: 14px; }</span></p>
+<p class="p1"><span class="s1">.modal-btns button {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>flex: 1; padding: 9px; border-radius: 8px; font-size: 13px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>cursor: pointer; border: none; font-family: inherit; font-weight: 500;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.btn-cancel { background: #f5f3f0; color: #999; }</span></p>
+<p class="p1"><span class="s1">.btn-cancel:hover { background: #eeebe6; }</span></p>
+<p class="p1"><span class="s1">.btn-save { background: #111; color: #fff; }</span></p>
+<p class="p1"><span class="s1">.btn-save:hover { background: #333; }</span></p>
+<p class="p1"><span class="s1">#modal-status { font-size: 11px; color: #e24b4a; min-height: 14px; margin-top: 5px; text-align: center; }</span></p>
+<p class="p1"><span class="s1">.type-toggle { display: flex; gap: 5px; margin-bottom: 12px; }</span></p>
+<p class="p1"><span class="s1">.type-btn {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>flex: 1; padding: 7px 4px; border: 1.5px solid #eee; border-radius: 7px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>font-size: 11px; cursor: pointer; text-align: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>background: #fff; color: #bbb; font-family: inherit; transition: all 0.12s;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.type-btn.selected { background: #111; color: #fff; border-color: #111; }</span></p>
+<p class="p1"><span class="s1">.color-swatches { display: flex; gap: 7px; flex-wrap: wrap; }</span></p>
+<p class="p1"><span class="s1">.cswatch {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>width: 24px; height: 24px; border-radius: 50%; cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border: 2.5px solid transparent; transition: all 0.12s; position: relative;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.cswatch:hover { transform: scale(1.1); }</span></p>
+<p class="p1"><span class="s1">.cswatch.selected { border-color: #fff; box-shadow: 0 0 0 2px #333; }</span></p>
+<p class="p1"><span class="s1">#import-textarea {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>width: 100%; height: 110px; background: #f7f5f2; border: 1px solid #e8e5e0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>border-radius: 8px; padding: 8px 10px; font-size: 11px; color: #333;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>font-family: 'Menlo', 'Consolas', monospace; resize: vertical; outline: none;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">#import-textarea:focus { border-color: #ccc; background: #fff; }</span></p>
+<p class="p1"><span class="s1">#import-status { font-size: 11px; min-height: 14px; margin-top: 5px; color: #e24b4a; }</span></p>
+<p class="p1"><span class="s1">#import-desc { font-size: 11px; color: #aaa; line-height: 1.6; margin-bottom: 10px; }</span></p>
+<p class="p1"><span class="s1">#place-modal-overlay .modal-box { width: 270px; }</span></p>
+<p class="p1"><span class="s1">#place-modal-overlay .modal-box h2 { margin-bottom: 10px; }</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="sidebar"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="sidebar-header"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h1&gt;성수동 매물 지도&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;p&gt;연무장길 · 서울숲 권역&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="mode-tabs"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="mode-tab active" onclick="switchTab('pin')"&gt;📍 핀&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="mode-tab" onclick="switchTab('draw')"&gt;✏️ 장소&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="tab-panel active" id="panel-pin"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="search-wrap"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div id="search-row"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;input id="search-input" placeholder="주소 또는 우편번호(5자리)" onkeydown="if(event.key==='Enter')searchAddr()"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button id="search-btn" onclick="searchAddr()"&gt;검색&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div id="search-status"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div id="search-results"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="prop-list-wrap"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="list-label"&gt;매물&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div id="prop-list"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="list-label" style="margin-top:6px;"&gt;참고 지점&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div id="ref-list"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="pin-hint"&gt;&lt;b&gt;지도 클릭&lt;/b&gt; 또는 &lt;b&gt;주소 검색&lt;/b&gt;으로 핀을 찍어요&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="tab-panel" id="panel-draw"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="draw-section-label"&gt;티어 선택&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="tier-radio-group"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="tier-radio" onclick="selectDrawTier(1)"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="tier-radio-dot" style="background:#E24B4A;"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span class="tier-radio-label"&gt;1티어 — 연무장길 메인&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="tier-radio" onclick="selectDrawTier(2)"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="tier-radio-dot" style="background:#EF9F27;"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span class="tier-radio-label"&gt;2티어 — 랜드마크 인근&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="tier-radio" onclick="selectDrawTier(3)"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="tier-radio-dot" style="background:#aaa;"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span class="tier-radio-label"&gt;3티어 — 기타&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="draw-section-label"&gt;그리기&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="draw-btns"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="draw-btn" id="btn-line" onclick="startDraw('line')"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span class="btn-icon"&gt;〰️&lt;/span&gt;선 긋기&lt;br&gt;&lt;span style="font-size:10px;opacity:0.7;"&gt;가로수길·연무장길&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="draw-btn" id="btn-zone" onclick="startDraw('zone')"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span class="btn-icon"&gt;⬡&lt;/span&gt;영역 그리기&lt;br&gt;&lt;span style="font-size:10px;opacity:0.7;"&gt;블록·구역&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="draw-hint-box"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;b&gt;선 긋기&lt;/b&gt; — 클릭으로 점 추가, &lt;b&gt;더블클릭&lt;/b&gt;으로 완성&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;b&gt;영역 그리기&lt;/b&gt; — 꼭짓점 추가, &lt;b&gt;더블클릭&lt;/b&gt;으로 완성</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="places-list-wrap"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="list-label" style="margin-top:10px;"&gt;그린 장소&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div id="places-list"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="json-bar"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="json-btn" onclick="exportJSON()"&gt;⬇ 내보내기&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="json-btn" onclick="openImport()"&gt;⬆ 가져오기&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="map"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="draw-tooltip"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="modal-overlay" class="modal-overlay"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="modal-box"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h2 id="modal-title"&gt;핀 추가&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="mf"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;유형&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="type-toggle"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="type-btn selected" id="type-prop" onclick="selectType('prop')"&gt;매물&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="type-btn" id="type-ref" onclick="selectType('ref')"&gt;참고 지점&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="prop-fields"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;label&gt;색상&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="color-swatches" id="color-swatches"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;&lt;label&gt;매물명&lt;/label&gt;&lt;input id="f-name" placeholder="예: 연무장길 1층 A호"/&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;&lt;label&gt;보증금&lt;/label&gt;&lt;input id="f-deposit" placeholder="예: 3억"/&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;&lt;label&gt;월 임대료&lt;/label&gt;&lt;input id="f-rent" placeholder="예: 600만원"/&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;&lt;label&gt;전용면적&lt;/label&gt;&lt;input id="f-area" placeholder="예: 35평 / 115㎡"/&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;&lt;label&gt;메모&lt;/label&gt;&lt;textarea id="f-memo" placeholder="층, 접근성, 특이사항 등..."&gt;&lt;/textarea&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="ref-fields" style="display:none;"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;&lt;label&gt;장소명&lt;/label&gt;&lt;input id="f-ref-name" placeholder="예: 성수초등학교, 어린이공원"/&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="mf"&gt;&lt;label&gt;메모 (선택)&lt;/label&gt;&lt;input id="f-ref-note" placeholder="간단한 메모"/&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="modal-status"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="modal-btns"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="btn-cancel" onclick="closeModal()"&gt;취소&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="btn-save" onclick="savePin()"&gt;핀 찍기&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="place-modal-overlay" class="modal-overlay"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="modal-box"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h2 id="pm-title"&gt;장소 이름&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;input id="pm-name" style="width:100%;background:#f7f5f2;border:1px solid #eeebe6;border-radius:7px;padding:7px 10px;font-size:13px;color:#111;outline:none;font-family:inherit;" placeholder="예: 연무장길, 무신사 인근"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="modal-btns" style="margin-top:12px;"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="btn-cancel" onclick="cancelDraw()"&gt;취소&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="btn-save" onclick="confirmPlace()"&gt;저장&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="import-overlay" class="modal-overlay"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="modal-box"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h2&gt;JSON 가져오기&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;p id="import-desc"&gt;내보낸 JSON을 붙여넣으세요. 기존 데이터에 추가됩니다.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;textarea id="import-textarea" placeholder='{"properties":[...],...}'&gt;&lt;/textarea&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="import-status"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="modal-btns" style="margin-top:10px;"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="btn-cancel" onclick="closeImport()"&gt;취소&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="btn-save" onclick="importJSON()"&gt;불러오기&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">const PIN_COLORS = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>{ id:'blue', <span class="Apple-converted-space">  </span>hex:'#4A8FD9', label:'파랑' },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>{ id:'green',<span class="Apple-converted-space">  </span>hex:'#52A869', label:'초록' },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>{ id:'purple', hex:'#8B6FD4', label:'보라' },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>{ id:'red',<span class="Apple-converted-space">    </span>hex:'#E24B4A', label:'빨강' },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>{ id:'orange', hex:'#EF9F27', label:'주황' },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>{ id:'pink', <span class="Apple-converted-space">  </span>hex:'#D4537E', label:'분홍' },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>{ id:'gray', <span class="Apple-converted-space">  </span>hex:'#888888', label:'회색' },</span></p>
+<p class="p1"><span class="s1">];</span></p>
+<p class="p1"><span class="s1">const TIER_COLORS = { 1:'#E24B4A', 2:'#EF9F27', 3:'#aaaaaa' };</span></p>
+<p class="p1"><span class="s1">const STORAGE_KEY = 'seongsu_map_v2';</span></p>
+<p class="p1"><span class="s1">const map = L.map('map', { center:[37.5448,127.0553], zoom:16, zoomControl:false });</span></p>
+<p class="p1"><span class="s1">L.control.zoom({ position:'bottomright' }).addTo(map);</span></p>
+<p class="p1"><span class="s1">L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>attribution:'© OpenStreetMap © CARTO', subdomains:'abcd', maxZoom:19</span></p>
+<p class="p1"><span class="s1">}).addTo(map);</span></p>
+<p class="p1"><span class="s1">let properties=[], refs=[], places=[];</span></p>
+<p class="p1"><span class="s1">let nextPropId=1, nextRefId=1, nextPlaceId=1;</span></p>
+<p class="p1"><span class="s1">let pendingLatLng=null, activeCard=null;</span></p>
+<p class="p1"><span class="s1">let selectedType='prop', selectedColor='blue';</span></p>
+<p class="p1"><span class="s1">let drawTier=1, drawMode=null, drawPoints=[], drawPreviewLayer=null, drawTempMarkers=[];</span></p>
+<p class="p1"><span class="s1">const markerMap={}, refMarkerMap={}, placeLayerMap={};</span></p>
+<p class="p1"><span class="s1">function save() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>localStorage.setItem(STORAGE_KEY, JSON.stringify({</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>properties: properties.map(({id,name,lat,lng,color,deposit,rent,area,memo})=&gt;({id,name,lat,lng,color,deposit,rent,area,memo})),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>refs: refs.map(({id,name,lat,lng,note})=&gt;({id,name,lat,lng,note})),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>places: places.map(({id,name,tier,mode,points})=&gt;({id,name,tier,mode,points})),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>nextPropId, nextRefId, nextPlaceId,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}));</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function loadAll() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>try {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const stored = localStorage.getItem(STORAGE_KEY);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const INITIAL_DATA = {"version":2,"exportedAt":"2026-05-29T08:05:48.303Z","properties":[{"id":3,"name":"플라츠2","lat":37.54079388165618,"lng":127.06060767173769,"color":"blue","deposit":"협의","rent":"협의","area":"321평","memo":"[R스퀘어 - 플라츠2]\n\n- A/B 두개 동으로 구성\n- A동: 1~2F, 층별면적 40~50평대\n- B동: B1~3F, 층별면적 57평 수준\n\n&gt;&gt; 층당 면적이 작아 부적합한 매물로 판단"},{"id":6,"name":"서울숲 신축","lat":37.54791186242866,"lng":127.04307675361635,"color":"blue","deposit":"10억","rent":"1.5억","area":"600평","memo":"[R스퀘어 - 성수동1가 685-317외 1필지]\n\n- NOC 30만원 수준\n- 2개 건물 사용\n- 각 건물 B1~4F 규모로 구성\n- 층별 면적 70~80평 수준"},{"id":8,"name":"쿠시먼 1","lat":37.544815507343394,"lng":127.04949259757997,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":9,"name":"쿠시먼 2","lat":37.54453904081363,"lng":127.04951405525209,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":10,"name":"쿠시먼 3","lat":37.545108986076194,"lng":127.05343008041383,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":11,"name":"쿠시먼 4","lat":37.54314818594921,"lng":127.05326914787294,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":12,"name":"쿠시먼 5","lat":37.543260901453365,"lng":127.05197900533679,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":15,"name":"쿠시먼 6","lat":37.54093637553819,"lng":127.05556511878969,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":16,"name":"쿠시먼 7","lat":37.54166160137425,"lng":127.05421328544618,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":17,"name":"쿠시먼 8","lat":37.542646280880696,"lng":127.05702424049379,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":18,"name":"쿠시먼 9","lat":37.5427994048191,"lng":127.05840826034547,"color":"green","deposit":"","rent":"","area":"","memo":""},{"id":19,"name":"케이스티파이","lat":37.542605873122284,"lng":127.05510914325716,"color":"pink","deposit":"","rent":"","area":"","memo":""},{"id":20,"name":"삼덕정판","lat":37.544436960605005,"lng":127.05204606056215,"color":"pink","deposit":"","rent":"","area":"","memo":""},{"id":22,"name":"진영인쇄","lat":37.5410809959161,"lng":127.06241548061372,"color":"pink","deposit":"","rent":"","area":"","memo":""},{"id":23,"name":"성수동2가 신축","lat":37.54116181306394,"lng":127.05856114625932,"color":"blue","deposit":"","rent":"","area":"","memo":"[R스퀘어, 쿠시먼10]\n- 2개층 통 임대, 층별 면적 220평 수준\n\n&gt;&gt; 임대료의 경우 시세, 신축 대비 저렴한 편으로 판단됨(평당 33만원 수준).\n\n다만...\n(1) 이면에 위치해있으며\n(2) 바로 뒤쪽에 우성아파트를 끼고 있어\n매장 자체의 존재감은 비교적 약할 것으로 생각됨.\n\n&gt;&gt; 마케팅 측면의 강한 인풋 必"}],"refs":[{"id":1,"name":"경수초중","lat":37.5399598,"lng":127.0586906,"note":""},{"id":3,"name":"경일중고","lat":37.54379895613429,"lng":127.04791545867921,"note":""}],"places":[{"id":1,"name":"연무장길","tier":1,"mode":"line","points":[{"lat":37.54420302626638,"lng":127.04956769943239},{"lat":37.54020476226852,"lng":127.06265687942506},{"lat":37.54020476226852,"lng":127.06265687942506}]},{"id":2,"name":"무신사 메가스토어","tier":2,"mode":"zone","points":[{"lat":37.540600344753415,"lng":127.05566436052325},{"lat":37.54006864737981,"lng":127.05584675073625},{"lat":37.540160099598054,"lng":127.05549269914628},{"lat":37.540160099598054,"lng":127.05549269914628}]},{"id":4,"name":"젠틀몬스터 하우스 노웨어 서울","tier":2,"mode":"zone","points":[{"lat":37.53830763860419,"lng":127.05880254507066},{"lat":37.538048162781166,"lng":127.05869257450105},{"lat":37.537960961687126,"lng":127.05905199050905},{"lat":37.538226818362716,"lng":127.0591539144516},{"lat":37.538226818362716,"lng":127.0591539144516}]},{"id":5,"name":"경수초중","tier":3,"mode":"zone","points":[{"lat":37.54085981169513,"lng":127.05772697925569},{"lat":37.54072369800225,"lng":127.05760896205904},{"lat":37.53886912417945,"lng":127.05779135227205},{"lat":37.53881382654534,"lng":127.05976009368898},{"lat":37.53933277195969,"lng":127.05998539924623},{"lat":37.53958373606932,"lng":127.0592772960663},{"lat":37.53956672158012,"lng":127.05883741378786},{"lat":37.54046423058686,"lng":127.05897688865662},{"lat":37.54046423058686,"lng":127.05897688865662}]},{"id":6,"name":"경일중고","tier":3,"mode":"zone","points":[{"lat":37.5443816671003,"lng":127.04707056283952},{"lat":37.54322474744229,"lng":127.04668164253236},{"lat":37.54264202743347,"lng":127.04891860485078},{"lat":37.54372664861645,"lng":127.04934239387514},{"lat":37.54372664861645,"lng":127.04934239387514},{"lat":37.54372664861645,"lng":127.04934239387514}]},{"id":7,"name":"성수역","tier":3,"mode":"zone","points":[{"lat":37.54493885361822,"lng":127.05503404140474},{"lat":37.544281713353136,"lng":127.057241499424},{"lat":37.54419026619043,"lng":127.05719858407976},{"lat":37.5448389006181,"lng":127.05498576164247},{"lat":37.5448389006181,"lng":127.05498576164247}]},{"id":8,"name":"서울숲역","tier":3,"mode":"zone","points":[{"lat":37.54426682661337,"lng":127.04479336738588},{"lat":37.5427866445029,"lng":127.0444178581238},{"lat":37.54276963074459,"lng":127.04455196857454},{"lat":37.54424555983709,"lng":127.04494357109071},{"lat":37.54424555983709,"lng":127.04494357109071}]},{"id":9,"name":"무신사플래그십스토어 (착공중)","tier":3,"mode":"zone","points":[{"lat":37.54838344628192,"lng":127.04386557073582},{"lat":37.54817504312208,"lng":127.043897757244},{"lat":37.54815377746077,"lng":127.04428935976017},{"lat":37.54838769940157,"lng":127.04432691068638},{"lat":37.54840045875905,"lng":127.04432154626835},{"lat":37.54840045875905,"lng":127.04432154626835}]},{"id":10,"name":"성수고등학교","tier":3,"mode":"zone","points":[{"lat":37.54849879435877,"lng":127.03807711601259},{"lat":37.54728239406322,"lng":127.03767478466035},{"lat":37.54695064508301,"lng":127.03913390636446},{"lat":37.54807348182703,"lng":127.0396113395691},{"lat":37.54807348182703,"lng":127.03960597515106},{"lat":37.54807348182703,"lng":127.03960597515106}]},{"id":12,"name":"아뜰리에","tier":3,"mode":"zone","points":[{"lat":37.547971406458295,"lng":127.0398259162903},{"lat":37.54715479847632,"lng":127.03953623771669},{"lat":37.54592136320956,"lng":127.04363465309144},{"lat":37.54802244416013,"lng":127.04389214515687},{"lat":37.54802244416013,"lng":127.04389214515687}]},{"id":14,"name":"블루엘리펀트 스페이스","tier":1,"mode":"zone","points":[{"lat":37.542844065908525,"lng":127.05534785985948},{"lat":37.54255270498574,"lng":127.0551896095276},{"lat":37.54249528335569,"lng":127.05537468194964},{"lat":37.542629267090355,"lng":127.05543905496599},{"lat":37.542565465341966,"lng":127.0556402206421},{"lat":37.542722842889205,"lng":127.05571532249452},{"lat":37.54272496961053,"lng":127.05571800470355},{"lat":37.54272496961053,"lng":127.05571800470355},{"lat":37.54272496961053,"lng":127.05571800470355}]},{"id":16,"name":"대림창고 &amp; 무신사스토어","tier":2,"mode":"zone","points":[{"lat":37.54169350264202,"lng":127.05620616674426},{"lat":37.5415020948307,"lng":127.0561257004738},{"lat":37.54138299638898,"lng":127.05658167600635},{"lat":37.5415722777519,"lng":127.05666750669481},{"lat":37.5415722777519,"lng":127.05666750669481},{"lat":37.5415722777519,"lng":127.05666750669481}]},{"id":20,"name":"디올","tier":2,"mode":"zone","points":[{"lat":37.54389465715296,"lng":127.05203264951709},{"lat":37.54379470275281,"lng":127.0520728826523},{"lat":37.54389891052871,"lng":127.05222576856615},{"lat":37.54396058444991,"lng":127.05219358205797},{"lat":37.54396058444991,"lng":127.05219358205797}]},{"id":21,"name":"마뗑킴","tier":2,"mode":"zone","points":[{"lat":37.544796367385906,"lng":127.05141305923463},{"lat":37.54460922087597,"lng":127.05118507146837},{"lat":37.544485874055745,"lng":127.05134600400928},{"lat":37.54462623421447,"lng":127.05152034759523},{"lat":37.544753834129445,"lng":127.05149352550508},{"lat":37.544753834129445,"lng":127.05149352550508}]},{"id":23,"name":"메이타왕","tier":3,"mode":"zone","points":[{"lat":37.54295166409999,"lng":127.05414527334148},{"lat":37.54283469469209,"lng":127.05408090032512},{"lat":37.54278578015798,"lng":127.05422842182095},{"lat":37.54290700307499,"lng":127.05428743041925},{"lat":37.54290700307499,"lng":127.05428743041925}]},{"id":24,"name":"소문난성수감자탕","tier":3,"mode":"zone","points":[{"lat":37.54278239106369,"lng":127.05426156520845},{"lat":37.54272922305302,"lng":127.05448150634767},{"lat":37.54287809338733,"lng":127.05456465482713},{"lat":37.54296528873078,"lng":127.05435007810594},{"lat":37.54296528873078,"lng":127.05435007810594}]},{"id":25,"name":"능동미나리","tier":3,"mode":"zone","points":[{"lat":37.54283343231823,"lng":127.0539289712906},{"lat":37.54271008255991,"lng":127.05385386943819},{"lat":37.54267818172713,"lng":127.05395311117174},{"lat":37.54279727809986,"lng":127.05402016639711},{"lat":37.54279727809986,"lng":127.05402016639711}]},{"id":32,"name":"뉴발란스","tier":1,"mode":"zone","points":[{"lat":37.54342040423406,"lng":127.05197364091875},{"lat":37.543397010514255,"lng":127.05191463232042},{"lat":37.543343842941916,"lng":127.05188512802125},{"lat":37.54323112756315,"lng":127.05220431089403},{"lat":37.54332257590236,"lng":127.05224990844728},{"lat":37.54332257590236,"lng":127.05224990844728}]},{"id":33,"name":"아더에러","tier":1,"mode":"zone","points":[{"lat":37.543294928741865,"lng":127.05228209495546},{"lat":37.54322262073519,"lng":127.05223113298419},{"lat":37.54311203188345,"lng":127.05260664224626},{"lat":37.54318646670557,"lng":127.05264687538148},{"lat":37.54318646670557,"lng":127.05264687538148}]},{"id":38,"name":"선 5","tier":1,"mode":"line","points":[{"lat":37.54326728157115,"lng":127.05193340778352},{"lat":37.54330556226634,"lng":127.05184221267702},{"lat":37.54347782515159,"lng":127.05191731452943},{"lat":37.54347782515159,"lng":127.05191731452943},{"lat":37.54347782515159,"lng":127.05191731452943}]},{"id":39,"name":"선 6","tier":1,"mode":"line","points":[{"lat":37.54310352504193,"lng":127.05319672822955},{"lat":37.543137552402264,"lng":127.05325573682786},{"lat":37.543137552402264,"lng":127.05325573682786}]},{"id":40,"name":"뉴뉴 메가스토어","tier":1,"mode":"zone","points":[{"lat":37.54178069937092,"lng":127.05919951200487},{"lat":37.541419151293205,"lng":127.05902248620988},{"lat":37.54136172879008,"lng":127.05920219421388},{"lat":37.5415722777519,"lng":127.05930411815645},{"lat":37.541491461049006,"lng":127.05956429243089},{"lat":37.54164458735921,"lng":127.0596367120743},{"lat":37.54164458735921,"lng":127.0596367120743}]},{"id":41,"name":"선 7","tier":1,"mode":"line","points":[{"lat":37.54252931099365,"lng":127.05506891012193},{"lat":37.542593112772956,"lng":127.05512523651124},{"lat":37.542593112772956,"lng":127.05512523651124},{"lat":37.542593112772956,"lng":127.05512523651124}]},{"id":42,"name":"르라보&amp;프라다뷰티","tier":3,"mode":"zone","points":[{"lat":37.542333651863274,"lng":127.05583602190019},{"lat":37.54224432904609,"lng":127.0561444759369},{"lat":37.54242722803316,"lng":127.05621957778932},{"lat":37.54237193303787,"lng":127.05603986978534},{"lat":37.54241872111347,"lng":127.05587893724443},{"lat":37.54241872111347,"lng":127.05587893724443}]},{"id":43,"name":"EQL","tier":3,"mode":"zone","points":[{"lat":37.54301420314711,"lng":127.05883473157884},{"lat":37.54275049026183,"lng":127.05870598554614},{"lat":37.54264415415711,"lng":127.05903857946399},{"lat":37.54292275442964,"lng":127.05916732549669},{"lat":37.54292275442964,"lng":127.05916732549669}]},{"id":44,"name":"아더에러","tier":3,"mode":"zone","points":[{"lat":37.54239107361783,"lng":127.0564690232277},{"lat":37.54219541412466,"lng":127.05638319253924},{"lat":37.54212310505159,"lng":127.05663263797761},{"lat":37.542335778595714,"lng":127.05672383308412},{"lat":37.542335778595714,"lng":127.05672383308412}]},{"id":46,"name":"이구홈 성수2","tier":3,"mode":"zone","points":[{"lat":37.54062586613199,"lng":127.06120043992999},{"lat":37.54054930197007,"lng":127.06116288900377},{"lat":37.54051101985966,"lng":127.06126749515535},{"lat":37.54058971084313,"lng":127.06130772829059},{"lat":37.54058971084313,"lng":127.06130772829059}]},{"id":48,"name":"선 9","tier":3,"mode":"line","points":[{"lat":37.54036852516472,"lng":127.06216067075732},{"lat":37.54103208023144,"lng":127.0625361800194},{"lat":37.54107461561122,"lng":127.06241548061372},{"lat":37.54107461561122,"lng":127.06241548061372}]},{"id":49,"name":"선 10","tier":1,"mode":"line","points":[{"lat":37.54081089586536,"lng":127.06069886684419},{"lat":37.54073433189343,"lng":127.060663998127},{"lat":37.54073433189343,"lng":127.060663998127}]},{"id":50,"name":"우성2차아파트","tier":3,"mode":"zone","points":[{"lat":37.54070030343624,"lng":127.05849140882493},{"lat":37.54091085426589,"lng":127.05780476331712},{"lat":37.54100230545113,"lng":127.05787450075151},{"lat":37.54104058730934,"lng":127.05805420875551},{"lat":37.54107036207433,"lng":127.05823391675952},{"lat":37.54106185499984,"lng":127.05833047628406},{"lat":37.541000178680655,"lng":127.05838412046434},{"lat":37.540787501326705,"lng":127.05854773521425},{"lat":37.540787501326705,"lng":127.05854773521425}]},{"id":51,"name":"로우클래식","tier":3,"mode":"zone","points":[{"lat":37.54141277101726,"lng":127.05866038799287},{"lat":37.54127240480848,"lng":127.05859601497652},{"lat":37.5412171089567,"lng":127.05876767635347},{"lat":37.541287292146194,"lng":127.0588105916977},{"lat":37.54131068652799,"lng":127.05872744321825},{"lat":37.54138299638898,"lng":127.05875158309938},{"lat":37.54138299638898,"lng":127.05875158309938}]},{"id":53,"name":"통로","tier":3,"mode":"zone","points":[{"lat":37.54149358780547,"lng":127.05845385789874},{"lat":37.541342587945906,"lng":127.05838412046434},{"lat":37.54094275585489,"lng":127.05772161483766},{"lat":37.54100655899192,"lng":127.05787450075151},{"lat":37.54132982738038,"lng":127.0584484934807},{"lat":37.54146806672392,"lng":127.0585182309151},{"lat":37.54146806672392,"lng":127.0585182309151}]},{"id":56,"name":"선 11","tier":3,"mode":"line","points":[{"lat":37.541485080779246,"lng":127.05849140882493},{"lat":37.54125113717805,"lng":127.05838412046434},{"lat":37.54115543276598,"lng":127.05855041742326},{"lat":37.54115543276598,"lng":127.05855041742326}]},{"id":57,"name":"이구키즈성수","tier":3,"mode":"zone","points":[{"lat":37.54527486484889,"lng":127.05243229866029},{"lat":37.54514726582575,"lng":127.05238670110705},{"lat":37.5450813395782,"lng":127.05260932445528},{"lat":37.545206812063704,"lng":127.05266028642656},{"lat":37.545206812063704,"lng":127.05266028642656}]},{"id":58,"name":"시디즈","tier":3,"mode":"zone","points":[{"lat":37.545472642903164,"lng":127.05262541770936},{"lat":37.54536843732707,"lng":127.05259859561922},{"lat":37.54531739780807,"lng":127.05275148153308},{"lat":37.54541522352213,"lng":127.05281317234041},{"lat":37.54541522352213,"lng":127.05281317234041}]},{"id":59,"name":"선 12","tier":3,"mode":"line","points":[{"lat":37.543246014509734,"lng":127.05283463001253},{"lat":37.54340764402417,"lng":127.05291509628297},{"lat":37.543964837821925,"lng":127.0527219772339},{"lat":37.544088185504236,"lng":127.05286145210268},{"lat":37.54513025260615,"lng":127.05332279205324},{"lat":37.54508346623225,"lng":127.05344080924989},{"lat":37.54508346623225,"lng":127.05344080924989}]},{"id":60,"name":"선 9","tier":2,"mode":"line","points":[{"lat":37.54420515294549,"lng":127.04959988594057},{"lat":37.544481620713476,"lng":127.04955428838733},{"lat":37.544485874055745,"lng":127.04954624176027},{"lat":37.544485874055745,"lng":127.04954624176027}]},{"id":61,"name":"선 10","tier":3,"mode":"line","points":[{"lat":37.54420940630355,"lng":127.04960793256762},{"lat":37.5446921608645,"lng":127.0497688651085},{"lat":37.54473682082008,"lng":127.04952210187915},{"lat":37.54473682082008,"lng":127.04952210187915}]},{"id":62,"name":"선 11","tier":2,"mode":"line","points":[{"lat":37.54460071420529,"lng":127.0514962077141},{"lat":37.54452202745524,"lng":127.05163568258288},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298}]},{"id":63,"name":"선 12","tier":2,"mode":"line","points":[{"lat":37.54395207770521,"lng":127.05210506916048},{"lat":37.54440080716427,"lng":127.05202728509904},{"lat":37.54440080716427,"lng":127.05202728509904}]},{"id":64,"name":"선 13","tier":3,"mode":"line","points":[{"lat":37.54275899714366,"lng":127.05424815416339},{"lat":37.542267723127594,"lng":127.05395847558978},{"lat":37.54208057026998,"lng":127.0536580681801},{"lat":37.5415722777519,"lng":127.0540174841881},{"lat":37.5416594746226,"lng":127.05419450998308},{"lat":37.5416594746226,"lng":127.05419450998308}]},{"id":65,"name":"선 14","tier":2,"mode":"line","points":[{"lat":37.54214437243329,"lng":127.05624639987947},{"lat":37.540940629082705,"lng":127.05570995807649},{"lat":37.5409661503448,"lng":127.05545246601106},{"lat":37.5409661503448,"lng":127.05545246601106}]},{"id":66,"name":"선 15","tier":2,"mode":"line","points":[{"lat":37.54047061094398,"lng":127.0555865764618},{"lat":37.54096189680173,"lng":127.05544710159303},{"lat":37.54096189680173,"lng":127.05544710159303}]},{"id":67,"name":"선 16","tier":2,"mode":"line","points":[{"lat":37.54160843256432,"lng":127.05614715814592},{"lat":37.54163820710255,"lng":127.05602377653123},{"lat":37.54163820710255,"lng":127.05602377653123}]},{"id":68,"name":"선 17","tier":2,"mode":"line","points":[{"lat":37.54198061343762,"lng":127.05689817667009},{"lat":37.54258673259749,"lng":127.05714762210847},{"lat":37.54262076019372,"lng":127.05704301595689},{"lat":37.54262076019372,"lng":127.05704301595689}]},{"id":69,"name":"선 18","tier":2,"mode":"line","points":[{"lat":37.541650967615304,"lng":127.05804884433748},{"lat":37.54276537730441,"lng":127.05857992172243},{"lat":37.5427994048191,"lng":127.0584672689438},{"lat":37.5427994048191,"lng":127.0584672689438},{"lat":37.5427994048191,"lng":127.0584672689438}]}]};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const d = stored ? JSON.parse(stored) : INITIAL_DATA;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>nextPropId<span class="Apple-converted-space">  </span>= d.nextPropId<span class="Apple-converted-space">  </span>|| Math.max(0,...(d.properties||[]).map(p=&gt;p.id||0))+1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>nextRefId <span class="Apple-converted-space">  </span>= d.nextRefId <span class="Apple-converted-space">  </span>|| Math.max(0,...(d.refs||[]).map(r=&gt;r.id||0))+1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>nextPlaceId = d.nextPlaceId || Math.max(0,...(d.places||[]).map(pl=&gt;pl.id||0))+1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>(d.properties||[]).forEach(p=&gt;{ properties.push(p); _addPropMarker(p); _addPropCard(p); });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>(d.refs||[]).forEach(r=&gt;{ refs.push(r); _addRefMarker(r); _addRefCard(r); });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>(d.places||[]).forEach(pl=&gt;{ places.push(pl); _restorePlace(pl); });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>renderPlacesList();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} catch(e){ console.warn(e); }</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function switchTab(tab) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.mode-tab').forEach((t,i)=&gt;t.classList.toggle('active',(i===0&amp;&amp;tab==='pin')||(i===1&amp;&amp;tab==='draw')));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.tab-panel').forEach(p=&gt;p.classList.remove('active'));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById(`panel-${tab}`).classList.add('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(tab==='pin') stopDraw();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function initSwatches() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const wrap = document.getElementById('color-swatches');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>PIN_COLORS.forEach(c=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const s = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>s.className = 'cswatch' + (c.id===selectedColor?' selected':'');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>s.style.background = c.hex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>s.title = c.label;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>s.dataset.id = c.id;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>s.onclick = ()=&gt;{ selectColor(c.id); };</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>wrap.appendChild(s);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function selectColor(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>selectedColor = id;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.cswatch').forEach(s=&gt;s.classList.toggle('selected', s.dataset.id===id));</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">initSwatches();</span></p>
+<p class="p1"><span class="s1">map.on('click', e=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawMode){ addDrawPoint(e.latlng); return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>pendingLatLng = e.latlng;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>openModal();</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p1"><span class="s1">map.on('dblclick', e=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawMode){ L.DomEvent.stopPropagation(e); finishDraw(); }</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p1"><span class="s1">async function searchAddr() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const raw = document.getElementById('search-input').value.trim();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!raw) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const btn = document.getElementById('search-btn');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>btn.disabled=true; btn.textContent='...';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>setSS('검색 중...');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('search-results').innerHTML='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const isPostal = /^\d{5}$/.test(raw);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const queries = isPostal</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>? [`https://nominatim.openstreetmap.org/search?postalcode=${raw}&amp;countrycodes=kr&amp;format=json&amp;limit=5&amp;accept-language=ko`]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(raw)}&amp;countrycodes=kr&amp;format=json&amp;limit=5&amp;accept-language=ko`,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(raw+' 서울')}&amp;countrycodes=kr&amp;format=json&amp;limit=5&amp;accept-language=ko`,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let data = [];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>for (const url of queries) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>try {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const res = await fetch(url);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>data = await res.json();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (data.length) break;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>} catch(e) {}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!data.length){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>setSS('결과가 없어요. 도로명 주소나 우편번호(5자리)로 시도해 보세요.');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>btn.disabled=false; btn.textContent='검색'; return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>setSS(isPostal ? `우편번호 ${raw} 결과` : '');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const wrap=document.getElementById('search-results');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>data.forEach(r=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const div=document.createElement('div'); div.className='search-result-item';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const parts = r.display_name.split(',');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const name = parts[0].trim();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const addr = parts.slice(1,4).filter(Boolean).join(', ').trim();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>div.innerHTML=`&lt;div class="res-name"&gt;${name}&lt;/div&gt;&lt;div class="res-addr"&gt;${addr}&lt;/div&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>div.onclick=()=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>pendingLatLng={lat:parseFloat(r.lat),lng:parseFloat(r.lon)};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>map.flyTo([pendingLatLng.lat,pendingLatLng.lng],17,{duration:0.7});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('search-results').innerHTML='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('search-input').value=name;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setSS('');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('f-name').value=name;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setTimeout(openModal,600);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>wrap.appendChild(div);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>btn.disabled=false; btn.textContent='검색';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function setSS(m){ document.getElementById('search-status').textContent=m; }</span></p>
+<p class="p1"><span class="s1">function selectType(t) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>selectedType=t;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('type-prop').classList.toggle('selected',t==='prop');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('type-ref').classList.toggle('selected',t==='ref');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('prop-fields').style.display = t==='prop'?'block':'none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('ref-fields').style.display<span class="Apple-converted-space">  </span>= t==='ref'?'block':'none';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function openModal() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>selectType('prop'); selectColor('blue');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('modal-overlay').classList.add('open');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('modal-status').textContent='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>setTimeout(()=&gt;document.getElementById('f-name').focus(),80);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function closeModal() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('modal-overlay').classList.remove('open');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>['f-name','f-deposit','f-rent','f-area','f-memo','f-ref-name','f-ref-note'].forEach(id=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const el=document.getElementById(id); if(el) el.value='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>pendingLatLng=null;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function savePin() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!pendingLatLng){ closeModal(); return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(selectedType==='prop') saveProp();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>else saveRef();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function saveProp() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const name=document.getElementById('f-name').value.trim();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!name){ document.getElementById('modal-status').textContent='매물명을 입력해주세요.'; return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const p={id:nextPropId++, name, lat:pendingLatLng.lat, lng:pendingLatLng.lng,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color:selectedColor,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>deposit:document.getElementById('f-deposit').value.trim(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>rent:document.getElementById('f-rent').value.trim(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>area:document.getElementById('f-area').value.trim(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>memo:document.getElementById('f-memo').value.trim()};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>properties.push(p); _addPropMarker(p); _addPropCard(p);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>closeModal(); save();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>setTimeout(()=&gt;markerMap[p.id]?.openPopup(),150);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function saveRef() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const name=document.getElementById('f-ref-name').value.trim();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!name){ document.getElementById('modal-status').textContent='장소명을 입력해주세요.'; return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const r={id:nextRefId++, name, lat:pendingLatLng.lat, lng:pendingLatLng.lng,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>note:document.getElementById('f-ref-note').value.trim()};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>refs.push(r); _addRefMarker(r); _addRefCard(r);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>closeModal(); save();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function getColorHex(id){ return (PIN_COLORS.find(c=&gt;c.id===id)||PIN_COLORS[0]).hex; }</span></p>
+<p class="p1"><span class="s1">function makePropIcon(colorId) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const c=getColorHex(colorId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const svg=`&lt;svg xmlns="http://www.w3.org/2000/svg" width="26" height="34" viewBox="0 0 26 34"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;path d="M13 0C5.82 0 0 5.82 0 13c0 8.58 13 21 13 21S26 21.58 26 13C26 5.82 20.18 0 13 0z" fill="${c}" stroke="white" stroke-width="1.5"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;circle cx="13" cy="13" r="4.5" fill="rgba(255,255,255,0.9)"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/svg&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return L.divIcon({html:svg, className:'', iconSize:[26,34], iconAnchor:[13,34], popupAnchor:[0,-36]});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function propPopupHTML(p) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const c=getColorHex(p.color);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return `&lt;div class="popup-inner"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="popup-colorbar" style="background:${c};"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="popup-name"&gt;${p.name}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>${p.deposit?`&lt;div class="popup-row"&gt;&lt;span class="popup-label"&gt;보증금&lt;/span&gt;&lt;span class="popup-val"&gt;${p.deposit}&lt;/span&gt;&lt;/div&gt;`:''}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>${p.rent?`&lt;div class="popup-row"&gt;&lt;span class="popup-label"&gt;월 임대료&lt;/span&gt;&lt;span class="popup-val"&gt;${p.rent}&lt;/span&gt;&lt;/div&gt;`:''}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>${p.area?`&lt;div class="popup-row"&gt;&lt;span class="popup-label"&gt;전용면적&lt;/span&gt;&lt;span class="popup-val"&gt;${p.area}&lt;/span&gt;&lt;/div&gt;`:''}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>${p.memo?`&lt;div class="popup-memo"&gt;${p.memo.replace(/\n/g,'&lt;br/&gt;')}&lt;/div&gt;`:''}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="popup-del" onclick="deleteProp(${p.id})"&gt;삭제&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;`;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function _addPropMarker(p) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const m=L.marker([p.lat,p.lng],{icon:makePropIcon(p.color)}).addTo(map).bindPopup(propPopupHTML(p),{maxWidth:270});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>m.on('click',()=&gt;hlCard(`card-${p.id}`)); markerMap[p.id]=m;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function _addPropCard(p) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const c=getColorHex(p.color);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const card=document.createElement('div'); card.className='prop-card'; card.id=`card-${p.id}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>card.innerHTML=`&lt;div class="pc-top"&gt;&lt;div class="pc-dot" style="background:${c};"&gt;&lt;/div&gt;&lt;div class="pc-name"&gt;${p.name}&lt;/div&gt;&lt;div class="pc-area"&gt;${p.area||''}&lt;/div&gt;&lt;span class="pc-del" onclick="event.stopPropagation();deleteProp(${p.id})"&gt;×&lt;/span&gt;&lt;/div&gt;${(p.deposit||p.rent)?`&lt;div class="pc-price"&gt;${p.deposit?'보증금 &lt;span&gt;'+p.deposit+'&lt;/span&gt;':''} ${p.deposit&amp;&amp;p.rent?' · ':''} ${p.rent?'임대료 &lt;span&gt;'+p.rent+'&lt;/span&gt;':''}&lt;/div&gt;`:''}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>card.onclick=()=&gt;{map.flyTo([p.lat,p.lng],17,{duration:0.6});setTimeout(()=&gt;markerMap[p.id]?.openPopup(),500);hlCard(`card-${p.id}`);};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('prop-list').appendChild(card);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function deleteProp(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!confirm('삭제할까요?')) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>map.removeLayer(markerMap[id]); delete markerMap[id];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>properties=properties.filter(p=&gt;p.id!==id);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById(`card-${id}`)?.remove(); map.closePopup(); save();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function makeRefIcon() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const svg=`&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;circle cx="8" cy="8" r="6" fill="white" stroke="#999" stroke-width="2"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;circle cx="8" cy="8" r="2" fill="#bbb"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/svg&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return L.divIcon({html:svg, className:'', iconSize:[16,16], iconAnchor:[8,8], popupAnchor:[0,-10]});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function refPopupHTML(r) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return `&lt;div class="ref-popup-inner"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="ref-popup-name"&gt;📍 ${r.name}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>${r.note?`&lt;div class="ref-popup-note"&gt;${r.note}&lt;/div&gt;`:''}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="popup-del" onclick="deleteRef(${r.id})"&gt;삭제&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;`;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function _addRefMarker(r) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const m=L.marker([r.lat,r.lng],{icon:makeRefIcon()}).addTo(map).bindPopup(refPopupHTML(r),{maxWidth:200});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>m.on('click',()=&gt;hlCard(`rcard-${r.id}`)); refMarkerMap[r.id]=m;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function _addRefCard(r) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const card=document.createElement('div'); card.className='ref-card'; card.id=`rcard-${r.id}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>card.innerHTML=`&lt;div class="rc-top"&gt;&lt;div class="rc-ring"&gt;&lt;/div&gt;&lt;div class="rc-name"&gt;${r.name}&lt;/div&gt;&lt;span class="rc-del" onclick="event.stopPropagation();deleteRef(${r.id})"&gt;×&lt;/span&gt;&lt;/div&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>card.onclick=()=&gt;{map.flyTo([r.lat,r.lng],17,{duration:0.6});setTimeout(()=&gt;refMarkerMap[r.id]?.openPopup(),500);hlCard(`rcard-${r.id}`);};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('ref-list').appendChild(card);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function deleteRef(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!confirm('삭제할까요?')) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>map.removeLayer(refMarkerMap[id]); delete refMarkerMap[id];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>refs=refs.filter(r=&gt;r.id!==id);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById(`rcard-${id}`)?.remove(); map.closePopup(); save();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function hlCard(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(activeCard) document.getElementById(activeCard)?.classList.remove('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById(id)?.classList.add('active'); activeCard=id;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function selectDrawTier(t) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>drawTier=t;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.tier-radio').forEach((el,i)=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const ti=i+1; const c=TIER_COLORS[ti];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(ti===t){ el.style.borderColor=c; el.style.background=c+'18'; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>else{ el.style.borderColor='#f0ede8'; el.style.background='#fff'; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">selectDrawTier(1);</span></p>
+<p class="p1"><span class="s1">function startDraw(mode) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawMode===mode){ stopDraw(); return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>stopDraw(); drawMode=mode;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById(`btn-${mode==='line'?'line':'zone'}`).classList.add('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('map').classList.add('map-drawing');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('draw-hint-box').innerHTML = mode==='line'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>? '클릭으로 점 추가 · &lt;b&gt;더블클릭&lt;/b&gt;으로 완성'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>: '클릭으로 꼭짓점 추가 · &lt;b&gt;더블클릭&lt;/b&gt;으로 완성';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('draw-tooltip').style.display='block';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function stopDraw() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>drawMode=null; drawPoints=[];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('btn-line')?.classList.remove('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('btn-zone')?.classList.remove('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('map').classList.remove('map-drawing');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>drawTempMarkers.forEach(m=&gt;map.removeLayer(m)); drawTempMarkers=[];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawPreviewLayer){ map.removeLayer(drawPreviewLayer); drawPreviewLayer=null; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('draw-hint-box').innerHTML='&lt;b&gt;선 긋기&lt;/b&gt; — 클릭으로 점 추가, &lt;b&gt;더블클릭&lt;/b&gt;으로 완성&lt;br&gt;&lt;b&gt;영역 그리기&lt;/b&gt; — 꼭짓점 추가, &lt;b&gt;더블클릭&lt;/b&gt;으로 완성';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('draw-tooltip').style.display='none';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">map.on('mousemove', e=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!drawMode) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const tt=document.getElementById('draw-tooltip');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>tt.style.left=e.originalEvent.clientX+'px'; tt.style.top=e.originalEvent.clientY+'px';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>tt.textContent=drawMode==='line'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>?(drawPoints.length===0?'시작점 클릭':`점 ${drawPoints.length}개 · 더블클릭 완성`)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>:(drawPoints.length===0?'꼭짓점 클릭':`꼭짓점 ${drawPoints.length}개 · 더블클릭 완성`);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawPoints.length&gt;=1){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const pts=[...drawPoints,e.latlng];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(drawPreviewLayer) map.removeLayer(drawPreviewLayer);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const c=TIER_COLORS[drawTier];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>drawPreviewLayer = drawMode==='line'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>? L.polyline(pts,{color:c,weight:4,opacity:0.45,dashArray:'6,4'}).addTo(map)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>: (pts.length&gt;=3 ? L.polygon(pts,{color:c,weight:2,opacity:0.45,fillColor:c,fillOpacity:0.07,dashArray:'5,4'}).addTo(map) : null);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p1"><span class="s1">function addDrawPoint(ll) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>drawPoints.push(ll);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const dot=L.circleMarker(ll,{radius:4,color:'#fff',fillColor:TIER_COLORS[drawTier],fillOpacity:1,weight:2}).addTo(map);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>drawTempMarkers.push(dot);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function finishDraw() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawMode==='line'&amp;&amp;drawPoints.length&lt;2){ stopDraw(); return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawMode==='zone'&amp;&amp;drawPoints.length&lt;3){ stopDraw(); return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(drawMode==='line') {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const count = places.filter(p=&gt;p.mode==='line').length + 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>commitPlace(`선 ${count}`);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.getElementById('pm-name').value='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.getElementById('place-modal-overlay').classList.add('open');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>setTimeout(()=&gt;document.getElementById('pm-name').focus(),80);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function confirmPlace() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const name = document.getElementById('pm-name').value.trim() || `영역 ${places.filter(p=&gt;p.mode==='zone').length+1}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('place-modal-overlay').classList.remove('open');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>commitPlace(name);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function placePopupHTML(id, name) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return `&lt;div class="ref-popup-inner"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="ref-popup-name"&gt;〰 ${name}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button class="popup-del" onclick="deletePlace(${id})"&gt;삭제&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;`;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function commitPlace(name) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const c=TIER_COLORS[drawTier], pts=[...drawPoints], mode=drawMode;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let layer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(mode==='line'){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>layer=L.polyline(pts,{color:c,weight:5,opacity:0.75,lineCap:'round',lineJoin:'round'}).addTo(map);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>layer=L.polygon(pts,{color:c,weight:2,opacity:0.7,fillColor:c,fillOpacity:0.12}).addTo(map);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(mode==='zone') layer.bindTooltip(name,{permanent:true,direction:'center',className:'place-label'});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const id=nextPlaceId++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(mode==='line') layer.bindPopup(placePopupHTML(id,name),{maxWidth:200});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>placeLayerMap[id]=layer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>places.push({id,name,tier:drawTier,mode,points:pts});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>stopDraw(); renderPlacesList(); save();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function cancelDraw() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('place-modal-overlay').classList.remove('open');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>stopDraw();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function _restorePlace(pl) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const c=TIER_COLORS[pl.tier];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let layer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(pl.mode==='line'){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>layer=L.polyline(pl.points,{color:c,weight:5,opacity:0.75,lineCap:'round',lineJoin:'round'}).addTo(map);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>layer.bindPopup(placePopupHTML(pl.id,pl.name),{maxWidth:200});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>layer=L.polygon(pl.points,{color:c,weight:2,opacity:0.7,fillColor:c,fillOpacity:0.12}).addTo(map);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>layer.bindTooltip(pl.name,{permanent:true,direction:'center',className:'place-label'});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>placeLayerMap[pl.id]=layer;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function renderPlacesList() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const wrap=document.getElementById('places-list'); wrap.innerHTML='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>places.forEach(p=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const c=TIER_COLORS[p.tier];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const div=document.createElement('div'); div.className='place-item';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const ind=p.mode==='line'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>?`&lt;div class="place-line" style="background:${c};"&gt;&lt;/div&gt;`</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>:`&lt;div class="place-area" style="background:${c};border:2px solid ${c};"&gt;&lt;/div&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>div.innerHTML=`${ind}&lt;span class="place-name"&gt;${p.name}&lt;/span&gt;&lt;span class="place-del" onclick="deletePlace(${p.id})"&gt;×&lt;/span&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>wrap.appendChild(div);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function deletePlace(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(!confirm('삭제할까요?')) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>map.removeLayer(placeLayerMap[id]); delete placeLayerMap[id];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>places=places.filter(p=&gt;p.id!==id); renderPlacesList(); save();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function exportJSON() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const data={version:2, exportedAt:new Date().toISOString(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>properties:properties.map(({id,name,lat,lng,color,deposit,rent,area,memo})=&gt;({id,name,lat,lng,color,deposit,rent,area,memo})),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>refs:refs.map(({id,name,lat,lng,note})=&gt;({id,name,lat,lng,note})),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>places:places.map(({id,name,tier,mode,points})=&gt;({id,name,tier,mode,points}))};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const a=document.createElement('a');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>a.download=`seongsu_map_${new Date().toISOString().slice(0,10)}.json`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>a.click();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function openImport() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('import-textarea').value='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('import-status').textContent='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('import-overlay').classList.add('open');</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function closeImport() { document.getElementById('import-overlay').classList.remove('open'); }</span></p>
+<p class="p1"><span class="s1">function importJSON() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const setErr=m=&gt;{ document.getElementById('import-status').textContent=m; };</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let data;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>try{ data=JSON.parse(document.getElementById('import-textarea').value.trim()); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>catch(e){ setErr('JSON 형식이 올바르지 않아요.'); return; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>(data.properties||[]).forEach(p=&gt;{ p.id=nextPropId++; properties.push(p); _addPropMarker(p); _addPropCard(p); });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>(data.refs||[]).forEach(r=&gt;{ r.id=nextRefId++; refs.push(r); _addRefMarker(r); _addRefCard(r); });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>(data.places||[]).forEach(pl=&gt;{ pl.id=nextPlaceId++; places.push(pl); _restorePlace(pl); });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>renderPlacesList(); save(); closeImport();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const first=(data.properties||[])[0]||(data.refs||[])[0];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(first) map.flyTo([first.lat,first.lng],16,{duration:0.8});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">document.addEventListener('keydown', e=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(e.key==='Escape'){ closeModal(); cancelDraw(); stopDraw(); closeImport(); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if(e.key==='Enter'&amp;&amp;document.getElementById('place-modal-overlay').classList.contains('open')) confirmPlace();</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p1"><span class="s1">loadAll();</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
