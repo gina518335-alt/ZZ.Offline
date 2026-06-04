@@ -7,29 +7,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretendard',sans-serif;height:100vh;display:flex;overflow:hidden;background:#f0ede8;color:#1a1a1a}
+body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretendard',sans-serif;height:100vh;display:flex;overflow:hidden;background:#f0ede8}
 
-/* SIDEBAR */
 #sb{width:300px;min-width:300px;height:100vh;background:#fff;border-right:1px solid #e8e5e0;display:flex;flex-direction:column;overflow:hidden}
 #sb-head{padding:16px 16px 12px;border-bottom:1px solid #f0ede8}
-#sb-head h1{font-size:14px;font-weight:600;letter-spacing:-.3px}
+#sb-head h1{font-size:14px;font-weight:600;letter-spacing:-.3px;color:#111}
 #sb-head p{font-size:11px;color:#bbb;margin-top:2px}
 
-/* TABS */
 #tabs{display:flex;border-bottom:1px solid #f0ede8}
 .tab{flex:1;padding:10px 4px;font-size:12px;color:#bbb;text-align:center;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;font-family:inherit;transition:all .15s}
 .tab.on{color:#111;border-bottom-color:#111;font-weight:500}
 .panel{display:none;flex-direction:column;flex:1;overflow:hidden}
 .panel.on{display:flex}
 
-/* SEARCH */
 #p-pin{flex:1;display:flex;flex-direction:column;overflow:hidden}
 #srch-wrap{padding:10px 12px 8px;border-bottom:1px solid #f0ede8}
 #srch-row{display:flex;gap:6px}
-#srch-inp{flex:1;background:#f7f5f2;border:1px solid #e8e5e0;border-radius:7px;padding:7px 10px;font-size:12px;outline:none;font-family:inherit;transition:border-color .15s}
+#srch-inp{flex:1;background:#f7f5f2;border:1px solid #e8e5e0;border-radius:7px;padding:7px 10px;font-size:12px;outline:none;font-family:inherit}
 #srch-inp:focus{border-color:#ccc;background:#fff}
 #srch-inp::placeholder{color:#bbb}
-#srch-btn{padding:7px 11px;background:#111;border:none;border-radius:7px;color:#fff;font-size:12px;cursor:pointer;font-family:inherit;white-space:nowrap}
+#srch-btn{padding:7px 11px;background:#111;border:none;border-radius:7px;color:#fff;font-size:12px;cursor:pointer;font-family:inherit}
 #srch-btn:hover{background:#333}
 #srch-btn:disabled{background:#ccc;cursor:not-allowed}
 #srch-st{font-size:11px;color:#bbb;margin-top:4px;min-height:14px;padding:0 2px}
@@ -39,13 +36,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretend
 .sri-name{font-weight:500;color:#111}
 .sri-addr{font-size:10px;color:#aaa;margin-top:1px}
 
-/* LIST */
 #list-wrap{flex:1;overflow-y:auto;padding:6px 10px 10px}
 #list-wrap::-webkit-scrollbar{width:3px}
 #list-wrap::-webkit-scrollbar-thumb{background:#e0dbd4;border-radius:4px}
 .lbl{font-size:10px;color:#ccc;text-transform:uppercase;letter-spacing:1px;padding:8px 8px 3px}
-
-/* PROP CARD */
 .pc{border:1px solid #f0ede8;border-radius:8px;padding:9px 11px;margin-bottom:4px;cursor:pointer;background:#fff;transition:all .12s}
 .pc:hover{background:#faf8f5;border-color:#dedad4}
 .pc.on{border-color:#c8c4be;background:#faf8f5}
@@ -57,8 +51,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretend
 .pc-x:hover{color:#e24b4a}
 .pc-pr{margin-top:4px;font-size:11px;color:#bbb;padding-left:15px}
 .pc-pr span{color:#888;font-weight:500}
-
-/* REF CARD */
 .rc{border:1px dashed #e8e5e0;border-radius:8px;padding:8px 11px;margin-bottom:4px;cursor:pointer;background:#fafafa;transition:all .12s}
 .rc:hover{background:#f5f3f0;border-color:#ccc}
 .rc.on{border-color:#bbb}
@@ -67,16 +59,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretend
 .rc-name{font-size:12px;color:#888;flex:1}
 .rc-x{font-size:14px;color:#bbb;cursor:pointer;padding-left:6px}
 .rc-x:hover{color:#e24b4a}
-
 #pin-hint{padding:8px 12px;border-top:1px solid #f0ede8;font-size:11px;color:#ccc;line-height:1.7}
 #pin-hint b{color:#aaa;font-weight:500}
 
-/* DRAW PANEL */
 #p-draw{padding:12px;gap:8px;overflow-y:auto}
 .dlbl{font-size:10px;color:#bbb;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;margin-top:2px}
 .trg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
 .tr{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1.5px solid #f0ede8;border-radius:7px;cursor:pointer;background:#fff;transition:all .12s}
-.tr:hover{border-color:#dedad4}
 .tr-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .tr-lbl{font-size:12px;color:#444;flex:1}
 .dbtns{display:flex;gap:6px;margin-bottom:10px}
@@ -86,7 +75,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretend
 .dbtn-icon{font-size:17px;display:block;margin-bottom:2px}
 #dhint{background:#f7f5f2;border:1px solid #e8e5e0;border-radius:8px;padding:9px 11px;font-size:11px;color:#999;line-height:1.7}
 #dhint b{color:#666;font-weight:500}
-#plc-list{margin-top:10px}
 .plc-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #f0ede8;border-radius:7px;margin-bottom:4px;background:#fff;font-size:12px}
 .plc-line{width:20px;height:3px;border-radius:2px;flex-shrink:0}
 .plc-area{width:15px;height:13px;border-radius:3px;flex-shrink:0;opacity:.55}
@@ -94,44 +82,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretend
 .plc-x{font-size:13px;color:#bbb;cursor:pointer;padding-left:4px}
 .plc-x:hover{color:#e24b4a}
 
-/* JSON BAR */
 #jbar{display:flex;gap:6px;padding:10px 12px;border-top:1px solid #f0ede8;background:#fff;flex-shrink:0}
 .jbtn{flex:1;padding:8px 6px;background:#f7f5f2;border:1px solid #e8e5e0;border-radius:7px;font-size:11px;color:#666;cursor:pointer;font-family:inherit;transition:all .12s;font-weight:500}
 .jbtn:hover{background:#eeeae4;border-color:#dedad4;color:#333}
 
-/* MAP */
 #map{flex:1;height:100vh}
-.leaflet-container{cursor:default}
 body.drawing .leaflet-container{cursor:crosshair!important}
-
-/* DRAW TOOLTIP */
 #dtt{display:none;position:fixed;pointer-events:none;z-index:8000;background:#111;color:#fff;font-size:11px;padding:5px 10px;border-radius:6px;transform:translate(12px,-50%)}
 
-/* POPUP */
 .leaflet-popup-content-wrapper{background:#fff!important;border:1px solid #e8e5e0!important;border-radius:10px!important;box-shadow:0 4px 24px rgba(0,0,0,.1)!important;padding:0!important}
 .leaflet-popup-tip{background:#fff!important}
 .leaflet-popup-content{margin:0!important}
-.pu{padding:13px 15px;min-width:190px;max-width:255px}
+.pu{padding:13px 15px;min-width:190px;max-width:260px}
 .pu-bar{width:100%;height:3px;border-radius:2px;margin-bottom:10px}
 .pu-name{font-size:13px;font-weight:600;color:#111;margin-bottom:9px;line-height:1.35}
 .pu-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f3f0}
 .pu-row:last-of-type{border:none}
 .pu-lbl{font-size:11px;color:#bbb}
 .pu-val{font-size:11px;color:#444;font-weight:500}
-.pu-memo{margin-top:8px;padding-top:8px;border-top:1px solid #f5f3f0;font-size:11px;color:#999;line-height:1.6}
+.pu-memo{margin-top:8px;padding-top:8px;border-top:1px solid #f5f3f0;font-size:11px;color:#999;line-height:1.6;white-space:pre-wrap}
 .pu-acts{display:flex;gap:5px;margin-top:8px}
 .pu-btn{flex:1;padding:6px 4px;background:#f5f3f0;border:none;border-radius:5px;font-size:11px;color:#888;cursor:pointer;font-family:inherit}
 .pu-btn.edit{background:#f0f4ff;color:#4A8FD9}
 .pu-btn.edit:hover{background:#e0ecff}
 .pu-btn.del:hover{background:#fdecea;color:#e24b4a}
-.pu-ref-name{font-size:13px;font-weight:500;color:#666;margin-bottom:8px}
+.pu-ref-name{font-size:13px;font-weight:500;color:#555;margin-bottom:8px}
 .pu-ref-note{font-size:11px;color:#aaa;margin-bottom:8px;line-height:1.5}
 
-/* PERMANENT TOOLTIP */
 .leaflet-tooltip.plbl{background:rgba(255,255,255,.92);border:1px solid #ddd;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:600;color:#333;box-shadow:0 1px 6px rgba(0,0,0,.1);white-space:nowrap;pointer-events:none}
 .leaflet-tooltip.plbl::before{display:none}
 
-/* MODALS */
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:9999;align-items:center;justify-content:center}
 .mo.on{display:flex}
 .mb{background:#fff;border:1px solid #e8e5e0;border-radius:14px;padding:20px;width:330px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.12)}
@@ -140,7 +120,7 @@ body.drawing .leaflet-container{cursor:crosshair!important}
 .mf label{display:block;font-size:11px;color:#aaa;margin-bottom:4px}
 .mf input,.mf textarea{width:100%;background:#f7f5f2;border:1px solid #eeebe6;border-radius:7px;padding:7px 10px;color:#111;font-size:13px;outline:none;font-family:inherit;transition:border-color .15s}
 .mf input:focus,.mf textarea:focus{border-color:#ccc;background:#fff}
-.mf textarea{resize:vertical;min-height:55px}
+.mf textarea{resize:vertical;min-height:70px}
 .mbtns{display:flex;gap:7px;margin-top:14px}
 .mbtns button{flex:1;padding:9px;border-radius:8px;font-size:13px;cursor:pointer;border:none;font-family:inherit;font-weight:500}
 .btn-c{background:#f5f3f0;color:#999}
@@ -154,7 +134,7 @@ body.drawing .leaflet-container{cursor:crosshair!important}
 .swatches{display:flex;gap:7px;flex-wrap:wrap}
 .sw{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .12s}
 .sw:hover{transform:scale(1.1)}
-.sw.on{border-color:#fff;box-shadow:0 0 0 2px #333}
+.sw.on{border-color:#fff;box-shadow:0 0 0 2.5px #333}
 #imp-ta{width:100%;height:110px;background:#f7f5f2;border:1px solid #e8e5e0;border-radius:8px;padding:8px 10px;font-size:11px;color:#333;font-family:'Menlo','Consolas',monospace;resize:vertical;outline:none}
 #imp-ta:focus{border-color:#ccc;background:#fff}
 #imp-st{font-size:11px;min-height:14px;margin-top:5px;color:#e24b4a}
@@ -167,13 +147,11 @@ body.drawing .leaflet-container{cursor:crosshair!important}
     <h1>성수동 매물 지도</h1>
     <p>연무장길 · 서울숲 권역</p>
   </div>
-
   <div id="tabs">
     <button class="tab on" onclick="switchTab('pin')">📍 핀</button>
     <button class="tab"    onclick="switchTab('draw')">✏️ 장소</button>
   </div>
 
-  <!-- PIN PANEL -->
   <div class="panel on" id="p-pin">
     <div id="srch-wrap">
       <div id="srch-row">
@@ -192,7 +170,6 @@ body.drawing .leaflet-container{cursor:crosshair!important}
     <div id="pin-hint"><b>지도 클릭</b> 또는 <b>주소 검색</b>으로 핀을 찍어요</div>
   </div>
 
-  <!-- DRAW PANEL -->
   <div class="panel" id="p-draw">
     <div class="dlbl">티어 선택</div>
     <div class="trg">
@@ -206,8 +183,8 @@ body.drawing .leaflet-container{cursor:crosshair!important}
       <button class="dbtn" id="btn-zone" onclick="startDraw('zone')"><span class="dbtn-icon">⬡</span>영역 그리기<br><span style="font-size:10px;opacity:.7">블록·구역</span></button>
     </div>
     <div id="dhint"><b>선</b> — 클릭으로 점 추가, <b>더블클릭</b>으로 완성<br><b>영역</b> — 꼭짓점 추가, <b>더블클릭</b>으로 완성</div>
-    <div id="plc-list">
-      <div class="lbl" style="margin-top:10px">그린 장소</div>
+    <div style="margin-top:10px">
+      <div class="lbl">그린 장소</div>
       <div id="places-list"></div>
     </div>
   </div>
@@ -247,7 +224,7 @@ body.drawing .leaflet-container{cursor:crosshair!important}
     <div id="mst"></div>
     <div class="mbtns">
       <button class="btn-c" onclick="closePin()">취소</button>
-      <button class="btn-s" onclick="savePin()">핀 찍기</button>
+      <button class="btn-s" onclick="savePin()">저장</button>
     </div>
   </div>
 </div>
@@ -269,7 +246,7 @@ body.drawing .leaflet-container{cursor:crosshair!important}
   <div class="mb">
     <h2>JSON 가져오기</h2>
     <p style="font-size:11px;color:#aaa;margin-bottom:10px;line-height:1.6">내보낸 JSON을 붙여넣으세요. 기존 데이터에 추가됩니다.</p>
-    <textarea id="imp-ta" placeholder='{"properties":[...],...}'></textarea>
+    <textarea id="imp-ta" placeholder='{"props":[...],...}'></textarea>
     <div id="imp-st"></div>
     <div class="mbtns" style="margin-top:10px">
       <button class="btn-c" onclick="closeImport()">취소</button>
@@ -280,9 +257,6 @@ body.drawing .leaflet-container{cursor:crosshair!important}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-// ═══════════════════════════════════════
-// CONSTANTS
-// ═══════════════════════════════════════
 const COLORS=[
   {id:'blue',  hex:'#4A8FD9',label:'파랑'},
   {id:'green', hex:'#52A869',label:'초록'},
@@ -294,60 +268,39 @@ const COLORS=[
 ];
 const TC={1:'#E24B4A',2:'#EF9F27',3:'#aaaaaa'};
 const SK='seongsu_v3';
+const SEED={"props":[{"id":3,"name":"플라츠2","lat":37.54079388165618,"lng":127.06060767173769,"color":"blue","dep":"협의","rent":"협의","area":"321평","memo":"[R스퀘어 - 플라츠2]\n\n- A/B 두개 동으로 구성\n- A동: 1~2F, 층별면적 40~50평대\n- B동: B1~3F, 층별면적 57평 수준\n\n>> 층당 면적이 작아 부적합한 매물로 판단"},{"id":6,"name":"서울숲 신축","lat":37.54791186242866,"lng":127.04307675361635,"color":"blue","dep":"10억","rent":"1.5억","area":"600평","memo":"[R스퀘어 - 성수동1가 685-317외 1필지]\n\n- NOC 30만원 수준\n- 2개 건물 사용\n- 각 건물 B1~4F 규모로 구성\n- 층별 면적 70~80평 수준"},{"id":8,"name":"쿠시먼 1","lat":37.544815507343394,"lng":127.04949259757997,"color":"green","dep":"30억","rent":"2억","area":"273 평","memo":"Scope out; 서연무장 외곽 지역에 있어, 트래픽 및 대세감 확보 어려움"},{"id":9,"name":"쿠시먼 2","lat":37.54453904081363,"lng":127.04951405525209,"color":"green","dep":"18억","rent":"1.8억","area":"162평","memo":"Scope out; 서연무장 외곽 지역에 있어, 트래픽 및 대세감 확보 어려움"},{"id":10,"name":"쿠시먼 3","lat":37.545108986076194,"lng":127.05343008041383,"color":"green","dep":"30억","rent":"2.5억","area":"483.5평","memo":"Scope out; 북연무장, 오피스 중심 지역에 있어, 트래픽 및 대세감 확보 어려움"},{"id":11,"name":"쿠시먼 4","lat":37.54314818594921,"lng":127.05326914787294,"color":"green","dep":"TBD","rent":"3.5억","area":"336평","memo":"현 킨포크 위치\n- 입지·가시성·트래픽 측면에서는 최상급\n- 1층 면적이 작고 (49평) \n- 좌우 분할 구조라는 한계 존재"},{"id":12,"name":"쿠시먼 5","lat":37.543260901453365,"lng":127.05197900533679,"color":"green","dep":"20억","rent":"1.2억","area":"178평","memo":"뉴발란스(매출 20억) 이면에 위치한 매물"},{"id":16,"name":"쿠시먼 7","lat":37.54166160137425,"lng":127.05421328544618,"color":"green","dep":"15억","rent":"1.2억","area":"105평","memo":""},{"id":17,"name":"쿠시먼 8","lat":37.542646280880696,"lng":127.05702424049379,"color":"green","dep":"30억","rent":"2억","area":"376평","memo":"(쿠시먼 매물 중 쟈니께서 가장 선호) \n\n- 트래픽은 4번 대비 약 50% 수준\n- 최근 브랜드들이 선호하는 결의 입지\n- 평수 구성 측면에서 긍정적 평가 가능\n- 이면 입지 특성상 초기 마케팅은 필요하나, 브랜드 파워 고려 시 모객 불가능한 수준의 위치는 아니라는 의견"},{"id":18,"name":"쿠시먼 9","lat":37.5427994048191,"lng":127.05840826034547,"color":"green","dep":"23억","rent":"2.3억","area":"288평","memo":"- 브랜드 출점 흐름이 이어지는 동연무장길 위치. \n- 향후 동연무장 성장 가능성 고려 시, 중장기 가치 측면에서 긍정적 평가 가능\n- 현재 검토 매물 중 브랜드 컨셉 구현, 규모감, 향후 상권 확장 가능성 측면에서 가장 균형감 있는 대안으로 평가됨."},{"id":23,"name":"성수동2가 신축","lat":37.54116181306394,"lng":127.05856114625932,"color":"blue","dep":"20억","rent":"1.5억","area":"226평","memo":"[R스퀘어, 쿠시먼10]\n- 2개층 통 임대, 층별 면적 220평 수준\n\n>> 임대료의 경우 시세, 신축 대비 저렴한 편으로 판단됨(평당 33만원 수준).\n\n다만...\n(1) 이면에 위치해있으며\n(2) 바로 뒤쪽에 우성아파트를 끼고 있어\n매장 자체의 존재감은 비교적 약할 것으로 생각됨.\n\n>> 마케팅 측면의 강한 인풋 必"},{"id":24,"name":"삼덕정판","lat":37.54443270725994,"lng":127.05202996730806,"color":"pink","dep":"5억","rent":"5000만원","area":"710평 (창고 포함)","memo":"메가스토어 출점 목표 시 고려 1순위 매물\n\n[Pros]\n- 현재 확보 매물 중 유일한 700평대 규모 매물\n- 규모감을 최우선 조건으로 고려할 경우 여전히 1순위 후보\n- 인테리어 비용까지 포함하더라도 면적 대비 가격 경쟁력 확보\n\n[Cons]\n- 인테리어 비용 부담은 큰 편. \n- 가용 기간 이슈로 인해 월 환산 인테리어 비용 약 2.4억 수준으로 추산됨. (<> 일반 성수동 매물(0.2~0.3억) 대비 약 10배 수준)"},{"id":25,"name":"케이스티파이","lat":37.542656914497684,"lng":127.05515474081042,"color":"pink","dep":"TBD","rent":"TBD","area":"","memo":"- 입지 기반 대세감 확보에 중점을 둘 경우 고려 가능. \n- 블루엘리펀트 바로 옆에 위치해있어, 대세감 확보에 매우 유리한 매물로 판단됨. \n- 다만 임대료의 경우 매우 높은 편으로 예상됨"},{"id":26,"name":"진영인쇄","lat":37.54109375652422,"lng":127.06237792968751,"color":"pink","dep":"수수료 베이스 협의","rent":"수수료 베이스 협의","area":"354평","memo":"- 공간 활용성(층당 면적 177평) 및 임대료 측면에서는 우수하나, \n- 연무장길 끝쪽에 위치 + 주변 앵커가 부재해 로케이션 파워 측면에서 다소 아쉬움\n\n---\n\n- 층별 면적이 넓게 구성되어 있어 실제 운영 및 동선 구성 측면에서 효율적 구조로 판단됨\n-> 층별 약 177평 규모\n-> 2개 층 구성\n-> 총 약 354평 추정 (부동산 열람 자료 기반)\n\n- 수수료율 협상 시 임대료 경쟁력 확보 가능\n->  월 임대료 약 1.6억 수준 추산 (Base GMV의 12% 적용 시)\n-> 인테리어 비용 포함 기준 총 비용(NOC) 약 53만원 수준. 성수 평균(약 70만원 수준) 대비 비용 메리트 존재"},{"id":27,"name":"쿠시먼 6","lat":37.54117882718915,"lng":127.05482482910158,"color":"green","dep":"6억","rent":"6000만원","area":"232평","memo":"*권리금 10억 별도 \n(단, 0원 회수 가정 시에도 비용은 합리적인 편) \n\n- 뷰티 중심 입지\n- 무신사 메가스토어 등 두 블럭 건너에 있으나, 직접 수혜는 어려움\n- 다만 무신사를 통해 계속해서 성수 상권이 확장 중이며, 해당 입지 역시 확장 축 중의 하나이므로 긍정 요인은 맞음\n- 권리금 고려해도 저렴한 임대료가 이점임"}],"refs":[{"id":1,"name":"경수초중","lat":37.5399598,"lng":127.0586906,"note":""},{"id":3,"name":"경일중고","lat":37.54379895613429,"lng":127.04791545867921,"note":""}],"places":[{"id":1,"name":"연무장길","tier":1,"mode":"line","pts":[{"lat":37.54420302626638,"lng":127.04956769943239},{"lat":37.54020476226852,"lng":127.06265687942506},{"lat":37.54020476226852,"lng":127.06265687942506}]},{"id":2,"name":"무신사 메가스토어","tier":2,"mode":"zone","pts":[{"lat":37.540600344753415,"lng":127.05566436052325},{"lat":37.54006864737981,"lng":127.05584675073625},{"lat":37.540160099598054,"lng":127.05549269914628},{"lat":37.540160099598054,"lng":127.05549269914628}]},{"id":4,"name":"젠틀몬스터 하우스 노웨어 서울","tier":2,"mode":"zone","pts":[{"lat":37.53830763860419,"lng":127.05880254507066},{"lat":37.538048162781166,"lng":127.05869257450105},{"lat":37.537960961687126,"lng":127.05905199050905},{"lat":37.538226818362716,"lng":127.0591539144516},{"lat":37.538226818362716,"lng":127.0591539144516}]},{"id":5,"name":"경수초중","tier":3,"mode":"zone","pts":[{"lat":37.54085981169513,"lng":127.05772697925569},{"lat":37.54072369800225,"lng":127.05760896205904},{"lat":37.53886912417945,"lng":127.05779135227205},{"lat":37.53881382654534,"lng":127.05976009368898},{"lat":37.53933277195969,"lng":127.05998539924623},{"lat":37.53958373606932,"lng":127.0592772960663},{"lat":37.53956672158012,"lng":127.05883741378786},{"lat":37.54046423058686,"lng":127.05897688865662},{"lat":37.54046423058686,"lng":127.05897688865662}]},{"id":6,"name":"경일중고","tier":3,"mode":"zone","pts":[{"lat":37.5443816671003,"lng":127.04707056283952},{"lat":37.54322474744229,"lng":127.04668164253236},{"lat":37.54264202743347,"lng":127.04891860485078},{"lat":37.54372664861645,"lng":127.04934239387514},{"lat":37.54372664861645,"lng":127.04934239387514},{"lat":37.54372664861645,"lng":127.04934239387514}]},{"id":7,"name":"성수역","tier":3,"mode":"zone","pts":[{"lat":37.54493885361822,"lng":127.05503404140474},{"lat":37.544281713353136,"lng":127.057241499424},{"lat":37.54419026619043,"lng":127.05719858407976},{"lat":37.5448389006181,"lng":127.05498576164247},{"lat":37.5448389006181,"lng":127.05498576164247}]},{"id":8,"name":"서울숲역","tier":3,"mode":"zone","pts":[{"lat":37.54426682661337,"lng":127.04479336738588},{"lat":37.5427866445029,"lng":127.0444178581238},{"lat":37.54276963074459,"lng":127.04455196857454},{"lat":37.54424555983709,"lng":127.04494357109071},{"lat":37.54424555983709,"lng":127.04494357109071}]},{"id":9,"name":"무신사플래그십스토어 (착공중)","tier":3,"mode":"zone","pts":[{"lat":37.54838344628192,"lng":127.04386557073582},{"lat":37.54817504312208,"lng":127.043897757244},{"lat":37.54815377746077,"lng":127.04428935976017},{"lat":37.54838769940157,"lng":127.04432691068638},{"lat":37.54840045875905,"lng":127.04432154626835},{"lat":37.54840045875905,"lng":127.04432154626835}]},{"id":10,"name":"성수고등학교","tier":3,"mode":"zone","pts":[{"lat":37.54849879435877,"lng":127.03807711601259},{"lat":37.54728239406322,"lng":127.03767478466035},{"lat":37.54695064508301,"lng":127.03913390636446},{"lat":37.54807348182703,"lng":127.0396113395691},{"lat":37.54807348182703,"lng":127.03960597515106},{"lat":37.54807348182703,"lng":127.03960597515106}]},{"id":12,"name":"아뜰리에","tier":3,"mode":"zone","pts":[{"lat":37.547971406458295,"lng":127.0398259162903},{"lat":37.54715479847632,"lng":127.03953623771669},{"lat":37.54592136320956,"lng":127.04363465309144},{"lat":37.54802244416013,"lng":127.04389214515687},{"lat":37.54802244416013,"lng":127.04389214515687}]},{"id":14,"name":"블루엘리펀트 스페이스","tier":1,"mode":"zone","pts":[{"lat":37.542844065908525,"lng":127.05534785985948},{"lat":37.54255270498574,"lng":127.0551896095276},{"lat":37.54249528335569,"lng":127.05537468194964},{"lat":37.542629267090355,"lng":127.05543905496599},{"lat":37.542565465341966,"lng":127.0556402206421},{"lat":37.542722842889205,"lng":127.05571532249452},{"lat":37.54272496961053,"lng":127.05571800470355},{"lat":37.54272496961053,"lng":127.05571800470355},{"lat":37.54272496961053,"lng":127.05571800470355}]},{"id":16,"name":"대림창고 & 무신사스토어","tier":2,"mode":"zone","pts":[{"lat":37.54169350264202,"lng":127.05620616674426},{"lat":37.5415020948307,"lng":127.0561257004738},{"lat":37.54138299638898,"lng":127.05658167600635},{"lat":37.5415722777519,"lng":127.05666750669481},{"lat":37.5415722777519,"lng":127.05666750669481},{"lat":37.5415722777519,"lng":127.05666750669481}]},{"id":20,"name":"디올","tier":2,"mode":"zone","pts":[{"lat":37.54389465715296,"lng":127.05203264951709},{"lat":37.54379470275281,"lng":127.0520728826523},{"lat":37.54389891052871,"lng":127.05222576856615},{"lat":37.54396058444991,"lng":127.05219358205797},{"lat":37.54396058444991,"lng":127.05219358205797}]},{"id":21,"name":"마뗑킴","tier":2,"mode":"zone","pts":[{"lat":37.544796367385906,"lng":127.05141305923463},{"lat":37.54460922087597,"lng":127.05118507146837},{"lat":37.544485874055745,"lng":127.05134600400928},{"lat":37.54462623421447,"lng":127.05152034759523},{"lat":37.544753834129445,"lng":127.05149352550508},{"lat":37.544753834129445,"lng":127.05149352550508}]},{"id":23,"name":"메이타왕","tier":3,"mode":"zone","pts":[{"lat":37.54295166409999,"lng":127.05414527334148},{"lat":37.54283469469209,"lng":127.05408090032512},{"lat":37.54278578015798,"lng":127.05422842182095},{"lat":37.54290700307499,"lng":127.05428743041925},{"lat":37.54290700307499,"lng":127.05428743041925}]},{"id":24,"name":"소문난성수감자탕","tier":3,"mode":"zone","pts":[{"lat":37.54278239106369,"lng":127.05426156520845},{"lat":37.54272922305302,"lng":127.05448150634767},{"lat":37.54287809338733,"lng":127.05456465482713},{"lat":37.54296528873078,"lng":127.05435007810594},{"lat":37.54296528873078,"lng":127.05435007810594}]},{"id":25,"name":"능동미나리","tier":3,"mode":"zone","pts":[{"lat":37.54283343231823,"lng":127.0539289712906},{"lat":37.54271008255991,"lng":127.05385386943819},{"lat":37.54267818172713,"lng":127.05395311117174},{"lat":37.54279727809986,"lng":127.05402016639711},{"lat":37.54279727809986,"lng":127.05402016639711}]},{"id":32,"name":"뉴발란스","tier":1,"mode":"zone","pts":[{"lat":37.54342040423406,"lng":127.05197364091875},{"lat":37.543397010514255,"lng":127.05191463232042},{"lat":37.543343842941916,"lng":127.05188512802125},{"lat":37.54323112756315,"lng":127.05220431089403},{"lat":37.54332257590236,"lng":127.05224990844728},{"lat":37.54332257590236,"lng":127.05224990844728}]},{"id":33,"name":"아더에러","tier":1,"mode":"zone","pts":[{"lat":37.543294928741865,"lng":127.05228209495546},{"lat":37.54322262073519,"lng":127.05223113298419},{"lat":37.54311203188345,"lng":127.05260664224626},{"lat":37.54318646670557,"lng":127.05264687538148},{"lat":37.54318646670557,"lng":127.05264687538148}]},{"id":38,"name":"선 5","tier":1,"mode":"line","pts":[{"lat":37.54326728157115,"lng":127.05193340778352},{"lat":37.54330556226634,"lng":127.05184221267702},{"lat":37.54347782515159,"lng":127.05191731452943},{"lat":37.54347782515159,"lng":127.05191731452943},{"lat":37.54347782515159,"lng":127.05191731452943}]},{"id":39,"name":"선 6","tier":1,"mode":"line","pts":[{"lat":37.54310352504193,"lng":127.05319672822955},{"lat":37.543137552402264,"lng":127.05325573682786},{"lat":37.543137552402264,"lng":127.05325573682786}]},{"id":40,"name":"뉴뉴 메가스토어","tier":1,"mode":"zone","pts":[{"lat":37.54178069937092,"lng":127.05919951200487},{"lat":37.541419151293205,"lng":127.05902248620988},{"lat":37.54136172879008,"lng":127.05920219421388},{"lat":37.5415722777519,"lng":127.05930411815645},{"lat":37.541491461049006,"lng":127.05956429243089},{"lat":37.54164458735921,"lng":127.0596367120743},{"lat":37.54164458735921,"lng":127.0596367120743}]},{"id":41,"name":"선 7","tier":1,"mode":"line","pts":[{"lat":37.54252931099365,"lng":127.05506891012193},{"lat":37.542593112772956,"lng":127.05512523651124},{"lat":37.542593112772956,"lng":127.05512523651124},{"lat":37.542593112772956,"lng":127.05512523651124}]},{"id":42,"name":"르라보&프라다뷰티","tier":3,"mode":"zone","pts":[{"lat":37.542333651863274,"lng":127.05583602190019},{"lat":37.54224432904609,"lng":127.0561444759369},{"lat":37.54242722803316,"lng":127.05621957778932},{"lat":37.54237193303787,"lng":127.05603986978534},{"lat":37.54241872111347,"lng":127.05587893724443},{"lat":37.54241872111347,"lng":127.05587893724443}]},{"id":43,"name":"EQL","tier":3,"mode":"zone","pts":[{"lat":37.54301420314711,"lng":127.05883473157884},{"lat":37.54275049026183,"lng":127.05870598554614},{"lat":37.54264415415711,"lng":127.05903857946399},{"lat":37.54292275442964,"lng":127.05916732549669},{"lat":37.54292275442964,"lng":127.05916732549669}]},{"id":44,"name":"아더에러","tier":3,"mode":"zone","pts":[{"lat":37.54239107361783,"lng":127.0564690232277},{"lat":37.54219541412466,"lng":127.05638319253924},{"lat":37.54212310505159,"lng":127.05663263797761},{"lat":37.542335778595714,"lng":127.05672383308412},{"lat":37.542335778595714,"lng":127.05672383308412}]},{"id":46,"name":"이구홈 성수2","tier":3,"mode":"zone","pts":[{"lat":37.54062586613199,"lng":127.06120043992999},{"lat":37.54054930197007,"lng":127.06116288900377},{"lat":37.54051101985966,"lng":127.06126749515535},{"lat":37.54058971084313,"lng":127.06130772829059},{"lat":37.54058971084313,"lng":127.06130772829059}]},{"id":48,"name":"선 9","tier":3,"mode":"line","pts":[{"lat":37.54036852516472,"lng":127.06216067075732},{"lat":37.54103208023144,"lng":127.0625361800194},{"lat":37.54107461561122,"lng":127.06241548061372},{"lat":37.54107461561122,"lng":127.06241548061372}]},{"id":49,"name":"선 10","tier":1,"mode":"line","pts":[{"lat":37.54081089586536,"lng":127.06069886684419},{"lat":37.54073433189343,"lng":127.060663998127},{"lat":37.54073433189343,"lng":127.060663998127}]},{"id":50,"name":"우성2차아파트","tier":3,"mode":"zone","pts":[{"lat":37.54070030343624,"lng":127.05849140882493},{"lat":37.54091085426589,"lng":127.05780476331712},{"lat":37.54100230545113,"lng":127.05787450075151},{"lat":37.54104058730934,"lng":127.05805420875551},{"lat":37.54107036207433,"lng":127.05823391675952},{"lat":37.54106185499984,"lng":127.05833047628406},{"lat":37.541000178680655,"lng":127.05838412046434},{"lat":37.540787501326705,"lng":127.05854773521425},{"lat":37.540787501326705,"lng":127.05854773521425}]},{"id":51,"name":"로우클래식","tier":3,"mode":"zone","pts":[{"lat":37.54141277101726,"lng":127.05866038799287},{"lat":37.54127240480848,"lng":127.05859601497652},{"lat":37.5412171089567,"lng":127.05876767635347},{"lat":37.541287292146194,"lng":127.0588105916977},{"lat":37.54131068652799,"lng":127.05872744321825},{"lat":37.54138299638898,"lng":127.05875158309938},{"lat":37.54138299638898,"lng":127.05875158309938}]},{"id":53,"name":"통로","tier":3,"mode":"zone","pts":[{"lat":37.54149358780547,"lng":127.05845385789874},{"lat":37.541342587945906,"lng":127.05838412046434},{"lat":37.54094275585489,"lng":127.05772161483766},{"lat":37.54100655899192,"lng":127.05787450075151},{"lat":37.54132982738038,"lng":127.0584484934807},{"lat":37.54146806672392,"lng":127.0585182309151},{"lat":37.54146806672392,"lng":127.0585182309151}]},{"id":56,"name":"선 11","tier":3,"mode":"line","pts":[{"lat":37.541485080779246,"lng":127.05849140882493},{"lat":37.54125113717805,"lng":127.05838412046434},{"lat":37.54115543276598,"lng":127.05855041742326},{"lat":37.54115543276598,"lng":127.05855041742326}]},{"id":57,"name":"이구키즈성수","tier":3,"mode":"zone","pts":[{"lat":37.54527486484889,"lng":127.05243229866029},{"lat":37.54514726582575,"lng":127.05238670110705},{"lat":37.5450813395782,"lng":127.05260932445528},{"lat":37.545206812063704,"lng":127.05266028642656},{"lat":37.545206812063704,"lng":127.05266028642656}]},{"id":58,"name":"시디즈","tier":3,"mode":"zone","pts":[{"lat":37.545472642903164,"lng":127.05262541770936},{"lat":37.54536843732707,"lng":127.05259859561922},{"lat":37.54531739780807,"lng":127.05275148153308},{"lat":37.54541522352213,"lng":127.05281317234041},{"lat":37.54541522352213,"lng":127.05281317234041}]},{"id":59,"name":"선 12","tier":3,"mode":"line","pts":[{"lat":37.543246014509734,"lng":127.05283463001253},{"lat":37.54340764402417,"lng":127.05291509628297},{"lat":37.543964837821925,"lng":127.0527219772339},{"lat":37.544088185504236,"lng":127.05286145210268},{"lat":37.54513025260615,"lng":127.05332279205324},{"lat":37.54508346623225,"lng":127.05344080924989},{"lat":37.54508346623225,"lng":127.05344080924989}]},{"id":61,"name":"선 10","tier":3,"mode":"line","pts":[{"lat":37.54420940630355,"lng":127.04960793256762},{"lat":37.5446921608645,"lng":127.0497688651085},{"lat":37.54473682082008,"lng":127.04952210187915},{"lat":37.54473682082008,"lng":127.04952210187915}]},{"id":62,"name":"선 11","tier":2,"mode":"line","pts":[{"lat":37.54460071420529,"lng":127.0514962077141},{"lat":37.54452202745524,"lng":127.05163568258288},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298}]},{"id":63,"name":"선 12","tier":2,"mode":"line","pts":[{"lat":37.54395207770521,"lng":127.05210506916048},{"lat":37.54440080716427,"lng":127.05202728509904},{"lat":37.54440080716427,"lng":127.05202728509904}]},{"id":64,"name":"선 13","tier":3,"mode":"line","pts":[{"lat":37.54275899714366,"lng":127.05424815416339},{"lat":37.542267723127594,"lng":127.05395847558978},{"lat":37.54208057026998,"lng":127.0536580681801},{"lat":37.5415722777519,"lng":127.0540174841881},{"lat":37.5416594746226,"lng":127.05419450998308},{"lat":37.5416594746226,"lng":127.05419450998308}]},{"id":68,"name":"선 17","tier":2,"mode":"line","pts":[{"lat":37.54198061343762,"lng":127.05689817667009},{"lat":37.54258673259749,"lng":127.05714762210847},{"lat":37.54262076019372,"lng":127.05704301595689},{"lat":37.54262076019372,"lng":127.05704301595689}]},{"id":69,"name":"선 18","tier":2,"mode":"line","pts":[{"lat":37.541650967615304,"lng":127.05804884433748},{"lat":37.54276537730441,"lng":127.05857992172243},{"lat":37.5427994048191,"lng":127.0584672689438},{"lat":37.5427994048191,"lng":127.0584672689438},{"lat":37.5427994048191,"lng":127.0584672689438}]},{"id":70,"name":"선 16","tier":3,"mode":"line","pts":[{"lat":37.542306004336055,"lng":127.05564558506013},{"lat":37.54114905246747,"lng":127.05513060092927}]},{"id":71,"name":"선 17","tier":3,"mode":"line","pts":[{"lat":37.54115330599988,"lng":127.05511182546618},{"lat":37.541180953954544,"lng":127.05489456653596},{"lat":37.541180953954544,"lng":127.05489456653596}]},{"id":74,"name":"섭듀드","tier":2,"mode":"zone","pts":[{"lat":37.54115543276598,"lng":127.06018388271333},{"lat":37.54107886914788,"lng":127.06014633178712},{"lat":37.54106185499984,"lng":127.06020802259447},{"lat":37.5411384186354,"lng":127.06024289131166},{"lat":37.5411384186354,"lng":127.06024289131166}]},{"id":75,"name":"브랜디멜빌","tier":2,"mode":"zone","pts":[{"lat":37.54130430624276,"lng":127.06051379442218},{"lat":37.54123624983311,"lng":127.06047624349596},{"lat":37.541195841310504,"lng":127.06059426069261},{"lat":37.54126389775704,"lng":127.06063717603685},{"lat":37.54126389775704,"lng":127.06063717603685},{"lat":37.54126389775704,"lng":127.06063717603685},{"lat":37.54126389775704,"lng":127.06063717603685}]},{"id":76,"name":"새터하우스","tier":3,"mode":"zone","pts":[{"lat":37.54147444699511,"lng":127.06127017736436},{"lat":37.541387249908034,"lng":127.06121921539308},{"lat":37.54136385555025,"lng":127.06128358840944},{"lat":37.54145530617987,"lng":127.06133723258974},{"lat":37.54145530617987,"lng":127.06133723258974}]},{"id":77,"name":"디키즈","tier":3,"mode":"zone","pts":[{"lat":37.541057601462214,"lng":127.06061303615571},{"lat":37.540955516486655,"lng":127.06054598093036},{"lat":37.54084067072208,"lng":127.06084102392198},{"lat":37.540868318792675,"lng":127.06088393926622},{"lat":37.540947009399055,"lng":127.06091344356538},{"lat":37.540947009399055,"lng":127.06091344356538}]},{"id":78,"name":"틸아이다이","tier":3,"mode":"zone","pts":[{"lat":37.540955516486655,"lng":127.06011682748796},{"lat":37.54087257234109,"lng":127.06007927656177},{"lat":37.54084705104698,"lng":127.06016778945924},{"lat":37.5409278684484,"lng":127.06020265817645},{"lat":37.5409278684484,"lng":127.06020265817645}]},{"id":79,"name":"선 17","tier":3,"mode":"line","pts":[{"lat":37.54422003969757,"lng":127.04957842826845},{"lat":37.544445467294395,"lng":127.04965353012086},{"lat":37.54452840746511,"lng":127.04952478408815},{"lat":37.54452840746511,"lng":127.04952478408815}]}]};
 
-// ═══════════════════════════════════════
-// MAP
-// ═══════════════════════════════════════
 const map=L.map('map',{center:[37.5448,127.0553],zoom:16,zoomControl:false});
 L.control.zoom({position:'bottomright'}).addTo(map);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
   attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:19
 }).addTo(map);
 
-// ═══════════════════════════════════════
-// SEED DATA (embedded)
-// ═══════════════════════════════════════
-const SEED={"props":[{"id":3,"name":"플라츠2","lat":37.54079388165618,"lng":127.06060767173769,"color":"blue","dep":"협의","rent":"협의","area":"321평","memo":"[R스퀘어 - 플라츠2]\n\n- A/B 두개 동으로 구성\n- A동: 1~2F, 층별면적 40~50평대\n- B동: B1~3F, 층별면적 57평 수준\n\n>> 층당 면적이 작아 부적합한 매물로 판단"},{"id":6,"name":"서울숲 신축","lat":37.54791186242866,"lng":127.04307675361635,"color":"blue","dep":"10억","rent":"1.5억","area":"600평","memo":"[R스퀘어 - 성수동1가 685-317외 1필지]\n\n- NOC 30만원 수준\n- 2개 건물 사용\n- 각 건물 B1~4F 규모로 구성\n- 층별 면적 70~80평 수준"},{"id":8,"name":"쿠시먼 1","lat":37.544815507343394,"lng":127.04949259757997,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":9,"name":"쿠시먼 2","lat":37.54453904081363,"lng":127.04951405525209,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":10,"name":"쿠시먼 3","lat":37.545108986076194,"lng":127.05343008041383,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":11,"name":"쿠시먼 4","lat":37.54314818594921,"lng":127.05326914787294,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":12,"name":"쿠시먼 5","lat":37.543260901453365,"lng":127.05197900533679,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":15,"name":"쿠시먼 6","lat":37.54093637553819,"lng":127.05556511878969,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":16,"name":"쿠시먼 7","lat":37.54166160137425,"lng":127.05421328544618,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":17,"name":"쿠시먼 8","lat":37.542646280880696,"lng":127.05702424049379,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":18,"name":"쿠시먼 9","lat":37.5427994048191,"lng":127.05840826034547,"color":"green","dep":"","rent":"","area":"","memo":""},{"id":23,"name":"성수동2가 신축","lat":37.54116181306394,"lng":127.05856114625932,"color":"blue","dep":"","rent":"","area":"","memo":"[R스퀘어, 쿠시먼10]\n- 2개층 통 임대, 층별 면적 220평 수준\n\n>> 임대료의 경우 시세, 신축 대비 저렴한 편으로 판단됨(평당 33만원 수준).\n\n다만...\n(1) 이면에 위치해있으며\n(2) 바로 뒤쪽에 우성아파트를 끼고 있어\n매장 자체의 존재감은 비교적 약할 것으로 생각됨.\n\n>> 마케팅 측면의 강한 인풋 必"},{"id":24,"name":"삼덕정판","lat":37.54443270725994,"lng":127.05202996730806,"color":"pink","dep":"5억","rent":"5000만원","area":"710평 (창고 포함)","memo":"메가스토어 출점 목표 시 고려 1순위 매물\n\n[Pros]\n- 현재 확보 매물 중 유일한 700평대 규모 매물\n- 규모감을 최우선 조건으로 고려할 경우 여전히 1순위 후보\n- 인테리어 비용까지 포함하더라도 면적 대비 가격 경쟁력 확보\n\n[Cons]\n- 인테리어 비용 부담은 큰 편. \n- 가용 기간 이슈로 인해 월 환산 인테리어 비용 약 2.4억 수준으로 추산됨. (<> 일반 성수동 매물(0.2~0.3억) 대비 약 10배 수준)"},{"id":25,"name":"케이스티파이","lat":37.542656914497684,"lng":127.05515474081042,"color":"pink","dep":"TBD","rent":"TBD","area":"","memo":"- 입지 기반 대세감 확보에 중점을 둘 경우 고려 가능. \n- 블루엘리펀트 바로 옆에 위치해있어, 대세감 확보에 매우 유리한 매물로 판단됨. \n- 다만 임대료의 경우 매우 높은 편으로 예상됨"},{"id":26,"name":"진영인쇄","lat":37.54109375652422,"lng":127.06237792968751,"color":"pink","dep":"수수료 베이스 협의","rent":"수수료 베이스 협의","area":"354평","memo":"- 공간 활용성(층당 면적 177평) 및 임대료 측면에서는 우수하나, \n- 연무장길 끝쪽에 위치 + 주변 앵커가 부재해 로케이션 파워 측면에서 다소 아쉬움\n\n---\n\n- 층별 면적이 넓게 구성되어 있어 실제 운영 및 동선 구성 측면에서 효율적 구조로 판단됨\n-> 층별 약 177평 규모\n-> 2개 층 구성\n-> 총 약 354평 추정 (부동산 열람 자료 기반)\n\n- 수수료율 협상 시 임대료 경쟁력 확보 가능\n->  월 임대료 약 1.6억 수준 추산 (Base GMV의 12% 적용 시)\n-> 인테리어 비용 포함 기준 총 비용(NOC) 약 53만원 수준. 성수 평균(약 70만원 수준) 대비 비용 메리트 존재"}],"refs":[{"id":1,"name":"경수초중","lat":37.5399598,"lng":127.0586906,"note":""},{"id":3,"name":"경일중고","lat":37.54379895613429,"lng":127.04791545867921,"note":""}],"places":[{"id":1,"name":"연무장길","tier":1,"mode":"line","pts":[{"lat":37.54420302626638,"lng":127.04956769943239},{"lat":37.54020476226852,"lng":127.06265687942506},{"lat":37.54020476226852,"lng":127.06265687942506}]},{"id":2,"name":"무신사 메가스토어","tier":2,"mode":"zone","pts":[{"lat":37.540600344753415,"lng":127.05566436052325},{"lat":37.54006864737981,"lng":127.05584675073625},{"lat":37.540160099598054,"lng":127.05549269914628},{"lat":37.540160099598054,"lng":127.05549269914628}]},{"id":4,"name":"젠틀몬스터 하우스 노웨어 서울","tier":2,"mode":"zone","pts":[{"lat":37.53830763860419,"lng":127.05880254507066},{"lat":37.538048162781166,"lng":127.05869257450105},{"lat":37.537960961687126,"lng":127.05905199050905},{"lat":37.538226818362716,"lng":127.0591539144516},{"lat":37.538226818362716,"lng":127.0591539144516}]},{"id":5,"name":"경수초중","tier":3,"mode":"zone","pts":[{"lat":37.54085981169513,"lng":127.05772697925569},{"lat":37.54072369800225,"lng":127.05760896205904},{"lat":37.53886912417945,"lng":127.05779135227205},{"lat":37.53881382654534,"lng":127.05976009368898},{"lat":37.53933277195969,"lng":127.05998539924623},{"lat":37.53958373606932,"lng":127.0592772960663},{"lat":37.53956672158012,"lng":127.05883741378786},{"lat":37.54046423058686,"lng":127.05897688865662},{"lat":37.54046423058686,"lng":127.05897688865662}]},{"id":6,"name":"경일중고","tier":3,"mode":"zone","pts":[{"lat":37.5443816671003,"lng":127.04707056283952},{"lat":37.54322474744229,"lng":127.04668164253236},{"lat":37.54264202743347,"lng":127.04891860485078},{"lat":37.54372664861645,"lng":127.04934239387514},{"lat":37.54372664861645,"lng":127.04934239387514},{"lat":37.54372664861645,"lng":127.04934239387514}]},{"id":7,"name":"성수역","tier":3,"mode":"zone","pts":[{"lat":37.54493885361822,"lng":127.05503404140474},{"lat":37.544281713353136,"lng":127.057241499424},{"lat":37.54419026619043,"lng":127.05719858407976},{"lat":37.5448389006181,"lng":127.05498576164247},{"lat":37.5448389006181,"lng":127.05498576164247}]},{"id":8,"name":"서울숲역","tier":3,"mode":"zone","pts":[{"lat":37.54426682661337,"lng":127.04479336738588},{"lat":37.5427866445029,"lng":127.0444178581238},{"lat":37.54276963074459,"lng":127.04455196857454},{"lat":37.54424555983709,"lng":127.04494357109071},{"lat":37.54424555983709,"lng":127.04494357109071}]},{"id":9,"name":"무신사플래그십스토어 (착공중)","tier":3,"mode":"zone","pts":[{"lat":37.54838344628192,"lng":127.04386557073582},{"lat":37.54817504312208,"lng":127.043897757244},{"lat":37.54815377746077,"lng":127.04428935976017},{"lat":37.54838769940157,"lng":127.04432691068638},{"lat":37.54840045875905,"lng":127.04432154626835},{"lat":37.54840045875905,"lng":127.04432154626835}]},{"id":10,"name":"성수고등학교","tier":3,"mode":"zone","pts":[{"lat":37.54849879435877,"lng":127.03807711601259},{"lat":37.54728239406322,"lng":127.03767478466035},{"lat":37.54695064508301,"lng":127.03913390636446},{"lat":37.54807348182703,"lng":127.0396113395691},{"lat":37.54807348182703,"lng":127.03960597515106},{"lat":37.54807348182703,"lng":127.03960597515106}]},{"id":12,"name":"아뜰리에","tier":3,"mode":"zone","pts":[{"lat":37.547971406458295,"lng":127.0398259162903},{"lat":37.54715479847632,"lng":127.03953623771669},{"lat":37.54592136320956,"lng":127.04363465309144},{"lat":37.54802244416013,"lng":127.04389214515687},{"lat":37.54802244416013,"lng":127.04389214515687}]},{"id":14,"name":"블루엘리펀트 스페이스","tier":1,"mode":"zone","pts":[{"lat":37.542844065908525,"lng":127.05534785985948},{"lat":37.54255270498574,"lng":127.0551896095276},{"lat":37.54249528335569,"lng":127.05537468194964},{"lat":37.542629267090355,"lng":127.05543905496599},{"lat":37.542565465341966,"lng":127.0556402206421},{"lat":37.542722842889205,"lng":127.05571532249452},{"lat":37.54272496961053,"lng":127.05571800470355},{"lat":37.54272496961053,"lng":127.05571800470355},{"lat":37.54272496961053,"lng":127.05571800470355}]},{"id":16,"name":"대림창고 & 무신사스토어","tier":2,"mode":"zone","pts":[{"lat":37.54169350264202,"lng":127.05620616674426},{"lat":37.5415020948307,"lng":127.0561257004738},{"lat":37.54138299638898,"lng":127.05658167600635},{"lat":37.5415722777519,"lng":127.05666750669481},{"lat":37.5415722777519,"lng":127.05666750669481},{"lat":37.5415722777519,"lng":127.05666750669481}]},{"id":20,"name":"디올","tier":2,"mode":"zone","pts":[{"lat":37.54389465715296,"lng":127.05203264951709},{"lat":37.54379470275281,"lng":127.0520728826523},{"lat":37.54389891052871,"lng":127.05222576856615},{"lat":37.54396058444991,"lng":127.05219358205797},{"lat":37.54396058444991,"lng":127.05219358205797}]},{"id":21,"name":"마뗑킴","tier":2,"mode":"zone","pts":[{"lat":37.544796367385906,"lng":127.05141305923463},{"lat":37.54460922087597,"lng":127.05118507146837},{"lat":37.544485874055745,"lng":127.05134600400928},{"lat":37.54462623421447,"lng":127.05152034759523},{"lat":37.544753834129445,"lng":127.05149352550508},{"lat":37.544753834129445,"lng":127.05149352550508}]},{"id":23,"name":"메이타왕","tier":3,"mode":"zone","pts":[{"lat":37.54295166409999,"lng":127.05414527334148},{"lat":37.54283469469209,"lng":127.05408090032512},{"lat":37.54278578015798,"lng":127.05422842182095},{"lat":37.54290700307499,"lng":127.05428743041925},{"lat":37.54290700307499,"lng":127.05428743041925}]},{"id":24,"name":"소문난성수감자탕","tier":3,"mode":"zone","pts":[{"lat":37.54278239106369,"lng":127.05426156520845},{"lat":37.54272922305302,"lng":127.05448150634767},{"lat":37.54287809338733,"lng":127.05456465482713},{"lat":37.54296528873078,"lng":127.05435007810594},{"lat":37.54296528873078,"lng":127.05435007810594}]},{"id":25,"name":"능동미나리","tier":3,"mode":"zone","pts":[{"lat":37.54283343231823,"lng":127.0539289712906},{"lat":37.54271008255991,"lng":127.05385386943819},{"lat":37.54267818172713,"lng":127.05395311117174},{"lat":37.54279727809986,"lng":127.05402016639711},{"lat":37.54279727809986,"lng":127.05402016639711}]},{"id":32,"name":"뉴발란스","tier":1,"mode":"zone","pts":[{"lat":37.54342040423406,"lng":127.05197364091875},{"lat":37.543397010514255,"lng":127.05191463232042},{"lat":37.543343842941916,"lng":127.05188512802125},{"lat":37.54323112756315,"lng":127.05220431089403},{"lat":37.54332257590236,"lng":127.05224990844728},{"lat":37.54332257590236,"lng":127.05224990844728}]},{"id":33,"name":"아더에러","tier":1,"mode":"zone","pts":[{"lat":37.543294928741865,"lng":127.05228209495546},{"lat":37.54322262073519,"lng":127.05223113298419},{"lat":37.54311203188345,"lng":127.05260664224626},{"lat":37.54318646670557,"lng":127.05264687538148},{"lat":37.54318646670557,"lng":127.05264687538148}]},{"id":38,"name":"선 5","tier":1,"mode":"line","pts":[{"lat":37.54326728157115,"lng":127.05193340778352},{"lat":37.54330556226634,"lng":127.05184221267702},{"lat":37.54347782515159,"lng":127.05191731452943},{"lat":37.54347782515159,"lng":127.05191731452943},{"lat":37.54347782515159,"lng":127.05191731452943}]},{"id":39,"name":"선 6","tier":1,"mode":"line","pts":[{"lat":37.54310352504193,"lng":127.05319672822955},{"lat":37.543137552402264,"lng":127.05325573682786},{"lat":37.543137552402264,"lng":127.05325573682786}]},{"id":40,"name":"뉴뉴 메가스토어","tier":1,"mode":"zone","pts":[{"lat":37.54178069937092,"lng":127.05919951200487},{"lat":37.541419151293205,"lng":127.05902248620988},{"lat":37.54136172879008,"lng":127.05920219421388},{"lat":37.5415722777519,"lng":127.05930411815645},{"lat":37.541491461049006,"lng":127.05956429243089},{"lat":37.54164458735921,"lng":127.0596367120743},{"lat":37.54164458735921,"lng":127.0596367120743}]},{"id":41,"name":"선 7","tier":1,"mode":"line","pts":[{"lat":37.54252931099365,"lng":127.05506891012193},{"lat":37.542593112772956,"lng":127.05512523651124},{"lat":37.542593112772956,"lng":127.05512523651124},{"lat":37.542593112772956,"lng":127.05512523651124}]},{"id":42,"name":"르라보&프라다뷰티","tier":3,"mode":"zone","pts":[{"lat":37.542333651863274,"lng":127.05583602190019},{"lat":37.54224432904609,"lng":127.0561444759369},{"lat":37.54242722803316,"lng":127.05621957778932},{"lat":37.54237193303787,"lng":127.05603986978534},{"lat":37.54241872111347,"lng":127.05587893724443},{"lat":37.54241872111347,"lng":127.05587893724443}]},{"id":43,"name":"EQL","tier":3,"mode":"zone","pts":[{"lat":37.54301420314711,"lng":127.05883473157884},{"lat":37.54275049026183,"lng":127.05870598554614},{"lat":37.54264415415711,"lng":127.05903857946399},{"lat":37.54292275442964,"lng":127.05916732549669},{"lat":37.54292275442964,"lng":127.05916732549669}]},{"id":44,"name":"아더에러","tier":3,"mode":"zone","pts":[{"lat":37.54239107361783,"lng":127.0564690232277},{"lat":37.54219541412466,"lng":127.05638319253924},{"lat":37.54212310505159,"lng":127.05663263797761},{"lat":37.542335778595714,"lng":127.05672383308412},{"lat":37.542335778595714,"lng":127.05672383308412}]},{"id":46,"name":"이구홈 성수2","tier":3,"mode":"zone","pts":[{"lat":37.54062586613199,"lng":127.06120043992999},{"lat":37.54054930197007,"lng":127.06116288900377},{"lat":37.54051101985966,"lng":127.06126749515535},{"lat":37.54058971084313,"lng":127.06130772829059},{"lat":37.54058971084313,"lng":127.06130772829059}]},{"id":48,"name":"선 9","tier":3,"mode":"line","pts":[{"lat":37.54036852516472,"lng":127.06216067075732},{"lat":37.54103208023144,"lng":127.0625361800194},{"lat":37.54107461561122,"lng":127.06241548061372},{"lat":37.54107461561122,"lng":127.06241548061372}]},{"id":49,"name":"선 10","tier":1,"mode":"line","pts":[{"lat":37.54081089586536,"lng":127.06069886684419},{"lat":37.54073433189343,"lng":127.060663998127},{"lat":37.54073433189343,"lng":127.060663998127}]},{"id":50,"name":"우성2차아파트","tier":3,"mode":"zone","pts":[{"lat":37.54070030343624,"lng":127.05849140882493},{"lat":37.54091085426589,"lng":127.05780476331712},{"lat":37.54100230545113,"lng":127.05787450075151},{"lat":37.54104058730934,"lng":127.05805420875551},{"lat":37.54107036207433,"lng":127.05823391675952},{"lat":37.54106185499984,"lng":127.05833047628406},{"lat":37.541000178680655,"lng":127.05838412046434},{"lat":37.540787501326705,"lng":127.05854773521425},{"lat":37.540787501326705,"lng":127.05854773521425}]},{"id":51,"name":"로우클래식","tier":3,"mode":"zone","pts":[{"lat":37.54141277101726,"lng":127.05866038799287},{"lat":37.54127240480848,"lng":127.05859601497652},{"lat":37.5412171089567,"lng":127.05876767635347},{"lat":37.541287292146194,"lng":127.0588105916977},{"lat":37.54131068652799,"lng":127.05872744321825},{"lat":37.54138299638898,"lng":127.05875158309938},{"lat":37.54138299638898,"lng":127.05875158309938}]},{"id":53,"name":"통로","tier":3,"mode":"zone","pts":[{"lat":37.54149358780547,"lng":127.05845385789874},{"lat":37.541342587945906,"lng":127.05838412046434},{"lat":37.54094275585489,"lng":127.05772161483766},{"lat":37.54100655899192,"lng":127.05787450075151},{"lat":37.54132982738038,"lng":127.0584484934807},{"lat":37.54146806672392,"lng":127.0585182309151},{"lat":37.54146806672392,"lng":127.0585182309151}]},{"id":56,"name":"선 11","tier":3,"mode":"line","pts":[{"lat":37.541485080779246,"lng":127.05849140882493},{"lat":37.54125113717805,"lng":127.05838412046434},{"lat":37.54115543276598,"lng":127.05855041742326},{"lat":37.54115543276598,"lng":127.05855041742326}]},{"id":57,"name":"이구키즈성수","tier":3,"mode":"zone","pts":[{"lat":37.54527486484889,"lng":127.05243229866029},{"lat":37.54514726582575,"lng":127.05238670110705},{"lat":37.5450813395782,"lng":127.05260932445528},{"lat":37.545206812063704,"lng":127.05266028642656},{"lat":37.545206812063704,"lng":127.05266028642656}]},{"id":58,"name":"시디즈","tier":3,"mode":"zone","pts":[{"lat":37.545472642903164,"lng":127.05262541770936},{"lat":37.54536843732707,"lng":127.05259859561922},{"lat":37.54531739780807,"lng":127.05275148153308},{"lat":37.54541522352213,"lng":127.05281317234041},{"lat":37.54541522352213,"lng":127.05281317234041}]},{"id":59,"name":"선 12","tier":3,"mode":"line","pts":[{"lat":37.543246014509734,"lng":127.05283463001253},{"lat":37.54340764402417,"lng":127.05291509628297},{"lat":37.543964837821925,"lng":127.0527219772339},{"lat":37.544088185504236,"lng":127.05286145210268},{"lat":37.54513025260615,"lng":127.05332279205324},{"lat":37.54508346623225,"lng":127.05344080924989},{"lat":37.54508346623225,"lng":127.05344080924989}]},{"id":60,"name":"선 9","tier":2,"mode":"line","pts":[{"lat":37.54420515294549,"lng":127.04959988594057},{"lat":37.544481620713476,"lng":127.04955428838733},{"lat":37.544485874055745,"lng":127.04954624176027},{"lat":37.544485874055745,"lng":127.04954624176027}]},{"id":61,"name":"선 10","tier":3,"mode":"line","pts":[{"lat":37.54420940630355,"lng":127.04960793256762},{"lat":37.5446921608645,"lng":127.0497688651085},{"lat":37.54473682082008,"lng":127.04952210187915},{"lat":37.54473682082008,"lng":127.04952210187915}]},{"id":62,"name":"선 11","tier":2,"mode":"line","pts":[{"lat":37.54460071420529,"lng":127.0514962077141},{"lat":37.54452202745524,"lng":127.05163568258288},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298},{"lat":37.54443270725994,"lng":127.05201655626298}]},{"id":63,"name":"선 12","tier":2,"mode":"line","pts":[{"lat":37.54395207770521,"lng":127.05210506916048},{"lat":37.54440080716427,"lng":127.05202728509904},{"lat":37.54440080716427,"lng":127.05202728509904}]},{"id":64,"name":"선 13","tier":3,"mode":"line","pts":[{"lat":37.54275899714366,"lng":127.05424815416339},{"lat":37.542267723127594,"lng":127.05395847558978},{"lat":37.54208057026998,"lng":127.0536580681801},{"lat":37.5415722777519,"lng":127.0540174841881},{"lat":37.5416594746226,"lng":127.05419450998308},{"lat":37.5416594746226,"lng":127.05419450998308}]},{"id":65,"name":"선 14","tier":2,"mode":"line","pts":[{"lat":37.54214437243329,"lng":127.05624639987947},{"lat":37.540940629082705,"lng":127.05570995807649},{"lat":37.5409661503448,"lng":127.05545246601106},{"lat":37.5409661503448,"lng":127.05545246601106}]},{"id":66,"name":"선 15","tier":2,"mode":"line","pts":[{"lat":37.54047061094398,"lng":127.0555865764618},{"lat":37.54096189680173,"lng":127.05544710159303},{"lat":37.54096189680173,"lng":127.05544710159303}]},{"id":67,"name":"선 16","tier":2,"mode":"line","pts":[{"lat":37.54160843256432,"lng":127.05614715814592},{"lat":37.54163820710255,"lng":127.05602377653123},{"lat":37.54163820710255,"lng":127.05602377653123}]},{"id":68,"name":"선 17","tier":2,"mode":"line","pts":[{"lat":37.54198061343762,"lng":127.05689817667009},{"lat":37.54258673259749,"lng":127.05714762210847},{"lat":37.54262076019372,"lng":127.05704301595689},{"lat":37.54262076019372,"lng":127.05704301595689}]},{"id":69,"name":"선 18","tier":2,"mode":"line","pts":[{"lat":37.541650967615304,"lng":127.05804884433748},{"lat":37.54276537730441,"lng":127.05857992172243},{"lat":37.5427994048191,"lng":127.0584672689438},{"lat":37.5427994048191,"lng":127.0584672689438},{"lat":37.5427994048191,"lng":127.0584672689438}]}]};
-
-// ═══════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════
 let props=[],refs=[],places=[];
-let nProp=27,nRef=4,nPlace=70;
+let nProp=28,nRef=4,nPlace=80;
 let pendLL=null,editId=null,activeC=null;
 let selType='prop',selColor='blue';
 let dTier=1,dMode=null,dPts=[],dPrev=null,dDots=[];
 const PM={},RM={},PLM={};
 
-// ═══════════════════════════════════════
-// STORAGE
-// ═══════════════════════════════════════
+// ── STORAGE
 function save(){
-  localStorage.setItem(SK,JSON.stringify({
-    props:props.map(({id,name,lat,lng,color,dep,rent,area,memo})=>({id,name,lat,lng,color,dep,rent,area,memo})),
-    refs:refs.map(({id,name,lat,lng,note})=>({id,name,lat,lng,note})),
-    places:places.map(({id,name,tier,mode,pts})=>({id,name,tier,mode,pts})),
-    nProp,nRef,nPlace
-  }));
+  localStorage.setItem(SK,JSON.stringify({props,refs,places,nProp,nRef,nPlace}));
 }
 function load(){
   try{
     const stored=localStorage.getItem(SK);
-    const d=stored?JSON.parse(stored):null;
-    // localStorage가 비어있으면 임베드 데이터로 초기화
-    const src=d||{...SEED,nProp:27,nRef:4,nPlace:70};
-    nProp=src.nProp||27; nRef=src.nRef||4; nPlace=src.nPlace||70;
+    const src=stored?JSON.parse(stored):{...SEED,nProp:28,nRef:4,nPlace:80};
+    nProp=src.nProp||28; nRef=src.nRef||4; nPlace=src.nPlace||80;
     (src.props||[]).forEach(p=>{props.push(p);addPM(p);addPC(p);});
     (src.refs||[]).forEach(r=>{refs.push(r);addRM(r);addRC(r);});
     (src.places||[]).forEach(pl=>{places.push(pl);restorePL(pl);});
     renderPL();
-    if(!d) save(); // 처음 열면 localStorage에 저장
+    if(!stored) save();
   }catch(e){console.warn(e);}
 }
 
-// ═══════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════
+// ── TABS
 function switchTab(t){
   document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('on',(i===0&&t==='pin')||(i===1&&t==='draw')));
   document.querySelectorAll('.panel').forEach(el=>el.classList.remove('on'));
@@ -355,9 +308,7 @@ function switchTab(t){
   if(t==='pin') stopDraw();
 }
 
-// ═══════════════════════════════════════
-// COLOR SWATCHES
-// ═══════════════════════════════════════
+// ── SWATCHES
 (function(){
   const w=document.getElementById('sw-wrap');
   COLORS.forEach(c=>{
@@ -373,9 +324,7 @@ function setColor(id){
   document.querySelectorAll('.sw').forEach(s=>s.classList.toggle('on',s.dataset.id===id));
 }
 
-// ═══════════════════════════════════════
-// MAP EVENTS
-// ═══════════════════════════════════════
+// ── MAP EVENTS
 map.on('click',e=>{
   if(dMode){addDPt(e.latlng);return;}
   pendLL=e.latlng; openPin();
@@ -384,9 +333,7 @@ map.on('dblclick',e=>{
   if(dMode){L.DomEvent.stopPropagation(e);finishDraw();}
 });
 
-// ═══════════════════════════════════════
-// SEARCH
-// ═══════════════════════════════════════
+// ── SEARCH
 async function doSearch(){
   const raw=document.getElementById('srch-inp').value.trim();
   if(!raw) return;
@@ -400,10 +347,9 @@ async function doSearch(){
     :[`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(raw)}&countrycodes=kr&format=json&limit=5&accept-language=ko`,
       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(raw+' 서울')}&countrycodes=kr&format=json&limit=5&accept-language=ko`];
   let data=[];
-  for(const u of urls){
-    try{const r=await fetch(u);data=await r.json();if(data.length)break;}catch(e){}
-  }
-  if(!data.length){setSS('결과 없음. 도로명 주소나 우편번호(5자리)로 시도해 보세요.');btn.disabled=false;btn.textContent='검색';return;}
+  for(const u of urls){try{const r=await fetch(u);data=await r.json();if(data.length)break;}catch(e){}}
+  btn.disabled=false; btn.textContent='검색';
+  if(!data.length){setSS('결과 없음. 도로명 주소나 우편번호(5자리)로 시도해 보세요.');return;}
   setSS('');
   const w=document.getElementById('srch-res');
   data.forEach(r=>{
@@ -421,13 +367,10 @@ async function doSearch(){
     };
     w.appendChild(div);
   });
-  btn.disabled=false; btn.textContent='검색';
 }
 function setSS(m){document.getElementById('srch-st').textContent=m;}
 
-// ═══════════════════════════════════════
-// PIN MODAL
-// ═══════════════════════════════════════
+// ── PIN MODAL
 function setType(t){
   selType=t;
   document.getElementById('tt-prop').classList.toggle('on',t==='prop');
@@ -445,7 +388,7 @@ function openPin(){
   setTimeout(()=>document.getElementById('f-name').focus(),80);
 }
 function openEdit(id){
-  const p=props.find(x=>x.id===id); if(!p) return;
+  const p=props.find(x=>x.id===id);if(!p)return;
   editId=id; map.closePopup();
   setType('prop'); setColor(p.color||'blue');
   document.getElementById('m-title').textContent='매물 수정';
@@ -467,8 +410,7 @@ function closePin(){
 function savePin(){
   if(editId){updateProp();return;}
   if(!pendLL){closePin();return;}
-  if(selType==='prop') doSaveProp();
-  else doSaveRef();
+  selType==='prop'?doSaveProp():doSaveRef();
 }
 function doSaveProp(){
   const name=document.getElementById('f-name').value.trim();
@@ -478,17 +420,17 @@ function doSaveProp(){
     rent:document.getElementById('f-rent').value.trim(),
     area:document.getElementById('f-area').value.trim(),
     memo:document.getElementById('f-memo').value.trim()};
-  props.push(p); addPM(p); addPC(p); closePin(); save();
+  props.push(p);addPM(p);addPC(p);closePin();save();
   setTimeout(()=>PM[p.id]?.openPopup(),150);
 }
 function doSaveRef(){
   const name=document.getElementById('f-rname').value.trim();
   if(!name){document.getElementById('mst').textContent='장소명을 입력해주세요.';return;}
   const r={id:nRef++,name,lat:pendLL.lat,lng:pendLL.lng,note:document.getElementById('f-rnote').value.trim()};
-  refs.push(r); addRM(r); addRC(r); closePin(); save();
+  refs.push(r);addRM(r);addRC(r);closePin();save();
 }
 function updateProp(){
-  const p=props.find(x=>x.id===editId); if(!p){closePin();return;}
+  const p=props.find(x=>x.id===editId);if(!p){closePin();return;}
   p.name=document.getElementById('f-name').value.trim()||p.name;
   p.color=selColor;
   p.dep=document.getElementById('f-dep').value.trim();
@@ -497,7 +439,6 @@ function updateProp(){
   p.memo=document.getElementById('f-memo').value.trim();
   PM[p.id]?.setIcon(mkPIcon(p.color));
   PM[p.id]?.setPopupContent(puProp(p));
-  // update card
   const card=document.getElementById('pc-'+p.id);
   if(card){
     const c=cHex(p.color);
@@ -505,14 +446,12 @@ function updateProp(){
     card.querySelector('.pc-name').textContent=p.name;
     card.querySelector('.pc-sz').textContent=p.area||'';
     const pe=card.querySelector('.pc-pr');
-    if(pe) pe.innerHTML=(p.dep||p.rent)?`${p.dep?'보증금 <span>'+p.dep+'</span>':''} ${p.dep&&p.rent?' · ':''} ${p.rent?'임대료 <span>'+p.rent+'</span>':''}`:'';
+    if(pe)pe.innerHTML=(p.dep||p.rent)?`${p.dep?'보증금 <span>'+p.dep+'</span>':''}${p.dep&&p.rent?' · ':''}${p.rent?'임대료 <span>'+p.rent+'</span>':''}`:''
   }
-  save(); closePin();
+  save();closePin();
 }
 
-// ═══════════════════════════════════════
-// PROP MARKERS + CARDS
-// ═══════════════════════════════════════
+// ── PROP MARKERS
 function cHex(id){return(COLORS.find(c=>c.id===id)||COLORS[0]).hex;}
 function mkPIcon(cid){
   const c=cHex(cid);
@@ -520,93 +459,87 @@ function mkPIcon(cid){
 }
 function puProp(p){
   const c=cHex(p.color);
-  return`<div class="pu"><div class="pu-bar" style="background:${c}"></div><div class="pu-name">${p.name}</div>${p.dep?`<div class="pu-row"><span class="pu-lbl">보증금</span><span class="pu-val">${p.dep}</span></div>`:''} ${p.rent?`<div class="pu-row"><span class="pu-lbl">월 임대료</span><span class="pu-val">${p.rent}</span></div>`:''} ${p.area?`<div class="pu-row"><span class="pu-lbl">전용면적</span><span class="pu-val">${p.area}</span></div>`:''} ${p.memo?`<div class="pu-memo">${p.memo.replace(/\n/g,'<br>')}</div>`:''}<div class="pu-acts"><button class="pu-btn edit" onclick="openEdit(${p.id})">수정</button><button class="pu-btn del" onclick="delProp(${p.id})">삭제</button></div></div>`;
+  return `<div class="pu"><div class="pu-bar" style="background:${c}"></div><div class="pu-name">${p.name}</div>${p.dep?`<div class="pu-row"><span class="pu-lbl">보증금</span><span class="pu-val">${p.dep}</span></div>`:''}${p.rent?`<div class="pu-row"><span class="pu-lbl">월 임대료</span><span class="pu-val">${p.rent}</span></div>`:''}${p.area?`<div class="pu-row"><span class="pu-lbl">전용면적</span><span class="pu-val">${p.area}</span></div>`:''}${p.memo?`<div class="pu-memo">${p.memo}</div>`:''}` +
+    `<div class="pu-acts"><button class="pu-btn edit" onclick="openEdit(${p.id})">수정</button><button class="pu-btn del" onclick="delProp(${p.id})">삭제</button></div></div>`;
 }
 function addPM(p){
   const m=L.marker([p.lat,p.lng],{icon:mkPIcon(p.color)}).addTo(map).bindPopup(puProp(p),{maxWidth:270});
-  m.on('click',()=>hlC('pc-'+p.id)); PM[p.id]=m;
+  m.on('click',()=>hlC('pc-'+p.id));PM[p.id]=m;
 }
 function addPC(p){
   const c=cHex(p.color);
-  const el=document.createElement('div'); el.className='pc'; el.id='pc-'+p.id;
-  el.innerHTML=`<div class="pc-top"><div class="pc-dot" style="background:${c}"></div><div class="pc-name">${p.name}</div><div class="pc-sz">${p.area||''}</div><span class="pc-x" onclick="event.stopPropagation();delProp(${p.id})">×</span></div>${(p.dep||p.rent)?`<div class="pc-pr">${p.dep?'보증금 <span>'+p.dep+'</span>':''} ${p.dep&&p.rent?' · ':''} ${p.rent?'임대료 <span>'+p.rent+'</span>':''}</div>`:''}`;
+  const el=document.createElement('div');el.className='pc';el.id='pc-'+p.id;
+  el.innerHTML=`<div class="pc-top"><div class="pc-dot" style="background:${c}"></div><div class="pc-name">${p.name}</div><div class="pc-sz">${p.area||''}</div><span class="pc-x" onclick="event.stopPropagation();delProp(${p.id})">×</span></div>${(p.dep||p.rent)?`<div class="pc-pr">${p.dep?'보증금 <span>'+p.dep+'</span>':''}${p.dep&&p.rent?' · ':''}${p.rent?'임대료 <span>'+p.rent+'</span>':''}</div>`:''}`;
   el.onclick=()=>{map.flyTo([p.lat,p.lng],17,{duration:.6});setTimeout(()=>PM[p.id]?.openPopup(),500);hlC('pc-'+p.id);};
   document.getElementById('prop-list').appendChild(el);
 }
 function delProp(id){
-  if(!confirm('삭제할까요?')) return;
-  map.removeLayer(PM[id]); delete PM[id];
+  if(!confirm('삭제할까요?'))return;
+  map.removeLayer(PM[id]);delete PM[id];
   props=props.filter(p=>p.id!==id);
-  document.getElementById('pc-'+id)?.remove(); map.closePopup(); save();
+  document.getElementById('pc-'+id)?.remove();map.closePopup();save();
 }
 
-// ═══════════════════════════════════════
-// REF MARKERS + CARDS
-// ═══════════════════════════════════════
+// ── REF MARKERS
 const refIcon=L.divIcon({html:`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="white" stroke="#999" stroke-width="2"/><circle cx="8" cy="8" r="2" fill="#bbb"/></svg>`,className:'',iconSize:[16,16],iconAnchor:[8,8],popupAnchor:[0,-10]});
-function puRef(r){return`<div class="pu"><div class="pu-ref-name">📍 ${r.name}</div>${r.note?`<div class="pu-ref-note">${r.note}</div>`:''}<div class="pu-acts"><button class="pu-btn del" onclick="delRef(${r.id})">삭제</button></div></div>`;}
+function puRef(r){return`<div class="pu"><div class="pu-ref-name">📍 ${r.name}</div>${r.note?`<div class="pu-ref-note">${r.note}</div>`:''} <div class="pu-acts"><button class="pu-btn del" onclick="delRef(${r.id})">삭제</button></div></div>`;}
 function addRM(r){
   const m=L.marker([r.lat,r.lng],{icon:refIcon}).addTo(map).bindPopup(puRef(r),{maxWidth:200});
-  m.on('click',()=>hlC('rc-'+r.id)); RM[r.id]=m;
+  m.on('click',()=>hlC('rc-'+r.id));RM[r.id]=m;
 }
 function addRC(r){
-  const el=document.createElement('div'); el.className='rc'; el.id='rc-'+r.id;
+  const el=document.createElement('div');el.className='rc';el.id='rc-'+r.id;
   el.innerHTML=`<div class="rc-top"><div class="rc-ring"></div><div class="rc-name">${r.name}</div><span class="rc-x" onclick="event.stopPropagation();delRef(${r.id})">×</span></div>`;
   el.onclick=()=>{map.flyTo([r.lat,r.lng],17,{duration:.6});setTimeout(()=>RM[r.id]?.openPopup(),500);hlC('rc-'+r.id);};
   document.getElementById('ref-list').appendChild(el);
 }
 function delRef(id){
-  if(!confirm('삭제할까요?')) return;
-  map.removeLayer(RM[id]); delete RM[id];
+  if(!confirm('삭제할까요?'))return;
+  map.removeLayer(RM[id]);delete RM[id];
   refs=refs.filter(r=>r.id!==id);
-  document.getElementById('rc-'+id)?.remove(); map.closePopup(); save();
+  document.getElementById('rc-'+id)?.remove();map.closePopup();save();
 }
 function hlC(id){
-  if(activeC) document.getElementById(activeC)?.classList.remove('on');
-  document.getElementById(id)?.classList.add('on'); activeC=id;
+  if(activeC)document.getElementById(activeC)?.classList.remove('on');
+  document.getElementById(id)?.classList.add('on');activeC=id;
 }
 
-// ═══════════════════════════════════════
-// DRAW
-// ═══════════════════════════════════════
+// ── DRAW
 function setDT(t){
   dTier=t;
   document.querySelectorAll('.tr').forEach((el,i)=>{
-    const ti=i+1; const c=TC[ti];
+    const ti=i+1,c=TC[ti];
     el.style.borderColor=ti===t?c:'#f0ede8';
     el.style.background=ti===t?c+'18':'#fff';
   });
 }
 setDT(1);
-
 function startDraw(mode){
   if(dMode===mode){stopDraw();return;}
-  stopDraw(); dMode=mode;
+  stopDraw();dMode=mode;
   document.getElementById('btn-'+mode).classList.add('on');
   document.body.classList.add('drawing');
-  document.getElementById('dhint').innerHTML=mode==='line'
-    ?'클릭으로 점 추가 · <b>더블클릭</b>으로 완성'
-    :'클릭으로 꼭짓점 추가 · <b>더블클릭</b>으로 완성';
+  document.getElementById('dhint').innerHTML=mode==='line'?'클릭으로 점 추가 · <b>더블클릭</b>으로 완성':'클릭으로 꼭짓점 추가 · <b>더블클릭</b>으로 완성';
   document.getElementById('dtt').style.display='block';
 }
 function stopDraw(){
-  dMode=null; dPts=[];
+  dMode=null;dPts=[];
   document.getElementById('btn-line')?.classList.remove('on');
   document.getElementById('btn-zone')?.classList.remove('on');
   document.body.classList.remove('drawing');
-  dDots.forEach(d=>map.removeLayer(d)); dDots=[];
+  dDots.forEach(d=>map.removeLayer(d));dDots=[];
   if(dPrev){map.removeLayer(dPrev);dPrev=null;}
   document.getElementById('dtt').style.display='none';
   document.getElementById('dhint').innerHTML='<b>선</b> — 클릭으로 점 추가, <b>더블클릭</b>으로 완성<br><b>영역</b> — 꼭짓점 추가, <b>더블클릭</b>으로 완성';
 }
 map.on('mousemove',e=>{
-  if(!dMode) return;
+  if(!dMode)return;
   const tt=document.getElementById('dtt');
-  tt.style.left=e.originalEvent.clientX+'px'; tt.style.top=e.originalEvent.clientY+'px';
+  tt.style.left=e.originalEvent.clientX+'px';tt.style.top=e.originalEvent.clientY+'px';
   tt.textContent=dMode==='line'?(dPts.length===0?'시작점 클릭':`${dPts.length}개 · 더블클릭 완성`):(dPts.length===0?'꼭짓점 클릭':`${dPts.length}개 · 더블클릭 완성`);
   if(dPts.length>=1){
     const pts=[...dPts,e.latlng];
-    if(dPrev) map.removeLayer(dPrev);
+    if(dPrev)map.removeLayer(dPrev);
     const c=TC[dTier];
     dPrev=dMode==='line'
       ?L.polyline(pts,{color:c,weight:4,opacity:.45,dashArray:'6,4'}).addTo(map)
@@ -621,11 +554,8 @@ function finishDraw(){
   if(dMode==='line'&&dPts.length<2){stopDraw();return;}
   if(dMode==='zone'&&dPts.length<3){stopDraw();return;}
   if(dMode==='line'){
-    // 선: 바로 저장, 이름 없음
-    const cnt=places.filter(p=>p.mode==='line').length+1;
-    commitPlace('선 '+cnt, dMode);
-  } else {
-    // 영역: 이름 입력
+    commitPlace('선 '+(places.filter(p=>p.mode==='line').length+1),'line');
+  }else{
     document.getElementById('z-name').value='';
     document.getElementById('m-zone').classList.add('on');
     setTimeout(()=>document.getElementById('z-name').focus(),80);
@@ -636,63 +566,54 @@ function confirmZone(){
   document.getElementById('m-zone').classList.remove('on');
   commitPlace(name,'zone');
 }
-function cancelDraw(){
-  document.getElementById('m-zone').classList.remove('on');
-  stopDraw();
-}
+function cancelDraw(){document.getElementById('m-zone').classList.remove('on');stopDraw();}
 function commitPlace(name,mode){
-  const c=TC[dTier], pts=[...dPts];
+  const c=TC[dTier],pts=[...dPts];
   let layer;
   if(mode==='line'){
     layer=L.polyline(pts,{color:c,weight:5,opacity:.75,lineCap:'round',lineJoin:'round'}).addTo(map);
     layer.bindPopup(`<div class="pu"><div class="pu-ref-name">〰 ${name}</div><div class="pu-acts"><button class="pu-btn del" onclick="delPlace(${nPlace})">삭제</button></div></div>`,{maxWidth:180});
-  } else {
+  }else{
     layer=L.polygon(pts,{color:c,weight:2,opacity:.7,fillColor:c,fillOpacity:.12}).addTo(map);
     layer.bindTooltip(name,{permanent:true,direction:'center',className:'plbl'});
   }
   const id=nPlace++;
   PLM[id]=layer;
   places.push({id,name,tier:dTier,mode,pts});
-  stopDraw(); renderPL(); save();
+  stopDraw();renderPL();save();
 }
 function restorePL(pl){
   const c=TC[pl.tier];
   let layer;
+  const pts=pl.pts||pl.points||[];
   if(pl.mode==='line'){
-    layer=L.polyline(pl.pts,{color:c,weight:5,opacity:.75,lineCap:'round',lineJoin:'round'}).addTo(map);
+    layer=L.polyline(pts,{color:c,weight:5,opacity:.75,lineCap:'round',lineJoin:'round'}).addTo(map);
     layer.bindPopup(`<div class="pu"><div class="pu-ref-name">〰 ${pl.name}</div><div class="pu-acts"><button class="pu-btn del" onclick="delPlace(${pl.id})">삭제</button></div></div>`,{maxWidth:180});
-  } else {
-    layer=L.polygon(pl.pts,{color:c,weight:2,opacity:.7,fillColor:c,fillOpacity:.12}).addTo(map);
+  }else{
+    layer=L.polygon(pts,{color:c,weight:2,opacity:.7,fillColor:c,fillOpacity:.12}).addTo(map);
     layer.bindTooltip(pl.name,{permanent:true,direction:'center',className:'plbl'});
   }
   PLM[pl.id]=layer;
 }
 function renderPL(){
-  const w=document.getElementById('places-list'); w.innerHTML='';
+  const w=document.getElementById('places-list');w.innerHTML='';
   places.forEach(p=>{
     const c=TC[p.tier];
-    const el=document.createElement('div'); el.className='plc-item';
-    const ind=p.mode==='line'
-      ?`<div class="plc-line" style="background:${c}"></div>`
-      :`<div class="plc-area" style="background:${c};border:2px solid ${c}"></div>`;
+    const el=document.createElement('div');el.className='plc-item';
+    const ind=p.mode==='line'?`<div class="plc-line" style="background:${c}"></div>`:`<div class="plc-area" style="background:${c};border:2px solid ${c}"></div>`;
     el.innerHTML=`${ind}<span class="plc-name">${p.name}</span><span class="plc-x" onclick="delPlace(${p.id})">×</span>`;
     w.appendChild(el);
   });
 }
 function delPlace(id){
-  if(!confirm('삭제할까요?')) return;
-  map.removeLayer(PLM[id]); delete PLM[id];
-  places=places.filter(p=>p.id!==id); renderPL(); save();
+  if(!confirm('삭제할까요?'))return;
+  map.removeLayer(PLM[id]);delete PLM[id];
+  places=places.filter(p=>p.id!==id);renderPL();save();
 }
 
-// ═══════════════════════════════════════
-// JSON
-// ═══════════════════════════════════════
+// ── JSON
 function doExport(){
-  const data={version:3,exportedAt:new Date().toISOString(),
-    props:props.map(({id,name,lat,lng,color,dep,rent,area,memo})=>({id,name,lat,lng,color,dep,rent,area,memo})),
-    refs:refs.map(({id,name,lat,lng,note})=>({id,name,lat,lng,note})),
-    places:places.map(({id,name,tier,mode,pts})=>({id,name,tier,mode,pts}))};
+  const data={version:3,exportedAt:new Date().toISOString(),props,refs,places};
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
   a.download='seongsu_map_'+new Date().toISOString().slice(0,10)+'.json';
@@ -707,20 +628,17 @@ function doImport(){
   (data.props||[]).forEach(p=>{p.id=nProp++;props.push(p);addPM(p);addPC(p);});
   (data.refs||[]).forEach(r=>{r.id=nRef++;refs.push(r);addRM(r);addRC(r);});
   (data.places||[]).forEach(pl=>{pl.id=nPlace++;places.push(pl);restorePL(pl);});
-  renderPL(); save(); closeImport();
+  renderPL();save();closeImport();
   const first=(data.props||[])[0]||(data.refs||[])[0];
-  if(first) map.flyTo([first.lat,first.lng],16,{duration:.8});
+  if(first)map.flyTo([first.lat,first.lng],16,{duration:.8});
 }
 
-// ═══════════════════════════════════════
-// KEYBOARD
-// ═══════════════════════════════════════
+// ── KEYBOARD
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){closePin();cancelDraw();stopDraw();closeImport();}
-  if(e.key==='Enter'&&document.getElementById('m-zone').classList.contains('on')) confirmZone();
+  if(e.key==='Enter'&&document.getElementById('m-zone').classList.contains('on'))confirmZone();
 });
 
-// INIT
 load();
 </script>
 </body>
